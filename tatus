@@ -1,0 +1,20 @@
+*   [33mc3f0f2f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge branch 'main' of github.com:caren65vi/ProyectoFinal
+[31m|[m[32m\[m  
+[31m|[m * [33m886ed33[m actulizacion del css de user y agregacion de nuevas paginas t
+* [32m|[m [33m60b01ef[m para que sea respondivo con el portatil
+[32m|[m[32m/[m  
+* [33mdc16f0b[m actulizacion del css de maint
+* [33mf525fd4[m arreglos de login
+* [33med0d678[m cargo de nav coloresl
+*   [33m027d6cc[m cargo de nav principal
+[33m|[m[34m\[m  
+[33m|[m *   [33m96d3c83[m Merge pull request #1 from caren65vi/register-alexis
+[33m|[m [35m|[m[36m\[m  
+[33m|[m [35m|[m * [33m8a6fe6a[m[33m ([m[1;31morigin/register-alexis[m[33m)[m agregue el componente register
+* [35m|[m [36m|[m [33m1968514[m creando el incidente como objeto
+[35m|[m[35m/[m [36m/[m  
+* [36m|[m [33m0e317cb[m Corregí el diseño y paleta de colores en login
+* [36m|[m [33mb4dab27[m mensaje de cambio
+* [36m|[m [33me1800fe[m Primer commit
+[36m|[m[36m/[m  
+* [33m5e1012c[m Primer commit
