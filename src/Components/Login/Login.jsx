@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { SignInPage } from '@toolpad/core/SignInPage';
 import { createTheme } from '@mui/material/styles';
-import { Box, CircularProgress } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import { signIn as firebaseSignIn, signInGoogle,  onAuthChange, doSignOut } from '../../FireBase/auth';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../../FireBase/config';
@@ -87,20 +87,20 @@ const Login = () => {
 
   if (cargando) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <div className="login-loading">
         <CircularProgress />
-      </Box>
+      </div>
     );
   }
 
   if (sessionData) {
     // Aquí va tu dashboard según el rol
     return (
-      <Box sx={{ p: 4 }}>
+      <div className="login-session">
         <p>Bienvenido: {sessionData.userData?.nombre || sessionData.userData?.email}</p>
         <p>Rol: {sessionData.userData?.rol}</p>
         <button onClick={doSignOut}>Cerrar sesión</button>
-      </Box>
+      </div>
     );
   }
 
@@ -114,12 +114,6 @@ const Login = () => {
           slotProps={{
             form: { noValidate: true },
             submitButton: { color: 'primary', variant: 'contained' },
-          }}
-          sx={{
-            '& form > .MuiStack-root': {
-              marginTop: '2rem',
-              rowGap: '0.5rem',
-            },
           }}
         />
       </div>
