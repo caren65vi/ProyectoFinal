@@ -1,5 +1,5 @@
 import React from 'react'
-import './Features.css'
+import './Feature.css'
 import CameraAltIcon from '@mui/icons-material/CameraAlt'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import AutorenewIcon from '@mui/icons-material/Autorenew'
@@ -28,7 +28,7 @@ const features = [
     },
 ]
 
-const Features = () => {
+const Feature = () => {
     return (
         <section className="features">
             <div className="features__header">
@@ -52,4 +52,4 @@ const Features = () => {
     )
 }
 
-export default Features
+export default Feature
