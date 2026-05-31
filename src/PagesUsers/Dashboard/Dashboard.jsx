@@ -1,11 +1,13 @@
 import React from 'react'
 import './Dashboard.css'
+import NavDash from '../NavDash/NavDash'
+import QuickAction from '../QuickAction/QuickAction'
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
-      <h1 className="dashboardTitle">Dashboard</h1>
-      <p className="dashboardSubtitle">Resumen general de tus incidentes</p>
+      <NavDash />
+      <QuickAction />
     </div>
   )
 }

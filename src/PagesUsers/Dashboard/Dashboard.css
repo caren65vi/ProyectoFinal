@@ -1,13 +1,5 @@
-.dashboardTitle {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 10px;
-}
-
-.dashboardSubtitle {
-  font-size: 16px;
-  color: var(--textMuted);
-  max-width: 720px;
-  line-height: 1.5;
+.dashboard {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
 }

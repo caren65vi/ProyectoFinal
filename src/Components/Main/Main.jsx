@@ -7,7 +7,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 
 const Main = () => {
     return (
-        <main>
+        <main className="homeMain">
             <section className="information">
 
                 <div className="badge">

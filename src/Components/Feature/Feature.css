@@ -1,9 +1,27 @@
 .features {
+    position: relative;
     width: 100%;
     padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+    border-top: 1px solid var(--border);
+    background:
+        linear-gradient(180deg, var(--accentSoft) 0%, transparent 7rem),
+        var(--bg);
+}
+
+.features::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    width: 72px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 18px var(--accentSoft);
+    transform: translateX(-50%);
 }
  
 .features__header {
@@ -47,7 +65,18 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    transition: border-color 0.25s, box-shadow 0.25s;
+    opacity: 0;
+    transform: translateY(36px);
+    transition:
+        opacity 0.65s ease var(--feature-delay),
+        transform 0.65s ease var(--feature-delay),
+        border-color 0.25s,
+        box-shadow 0.25s;
+}
+
+.feature-card--visible {
+    opacity: 1;
+    transform: translateY(0);
 }
  
 .feature-card:hover {
@@ -88,5 +117,13 @@
     .features__grid {
         grid-template-columns: 1fr 1fr;
         gap: 1.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .feature-card {
+        opacity: 1;
+        transform: none;
+        transition: border-color 0.25s, box-shadow 0.25s;
     }
 }

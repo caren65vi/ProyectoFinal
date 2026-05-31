@@ -1,0 +1,111 @@
+.dashboardContent {
+  padding: 34px 4px;
+}
+
+.dashboardSectionHeading {
+  margin-bottom: 22px;
+}
+
+.dashboardSectionEyebrow {
+  color: var(--accent);
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.dashboardSectionHeading h2 {
+  color: var(--text);
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.dashboardSectionHeading p {
+  color: var(--textMuted);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.dashboardQuickGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.dashboardQuickCard {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: var(--text);
+  display: flex;
+  gap: 12px;
+  min-height: 112px;
+  padding: 18px;
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.dashboardQuickCard:hover {
+  border-color: var(--accent);
+  box-shadow: var(--cardShadow);
+  transform: translateY(-3px);
+}
+
+.dashboardQuickIcon {
+  align-items: center;
+  background: var(--accentSoft);
+  border-radius: 12px;
+  color: var(--accent);
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  padding: 10px;
+}
+
+.dashboardQuickText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dashboardQuickText strong {
+  font-size: 15px;
+}
+
+.dashboardQuickText small {
+  color: var(--textMuted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.dashboardQuickArrow {
+  color: var(--accent);
+  font-size: 20px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .dashboardQuickGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Celular */
+@media (max-width: 720px) {
+  .dashboardContent {
+    padding: 26px 0;
+  }
+
+  .dashboardSectionHeading h2 {
+    font-size: 22px;
+  }
+
+  .dashboardQuickCard {
+    min-height: 94px;
+    padding: 15px;
+  }
+}

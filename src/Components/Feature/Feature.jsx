@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import './Feature.css'
 import CameraAltIcon from '@mui/icons-material/CameraAlt'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
@@ -29,6 +29,27 @@ const features = [
 ]
 
 const Feature = () => {
+    const gridRef = useRef(null)
+
+    useEffect(() => {
+        const cards = gridRef.current?.querySelectorAll('.feature-card')
+        if (!cards?.length) return undefined
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return
+                    entry.target.classList.add('feature-card--visible')
+                    observer.unobserve(entry.target)
+                })
+            },
+            { threshold: 0.2 },
+        )
+
+        cards.forEach((card) => observer.observe(card))
+        return () => observer.disconnect()
+    }, [])
+
     return (
         <section className="features">
             <div className="features__header">
@@ -37,9 +58,9 @@ const Feature = () => {
                 <p className="features__subtitle">Una plataforma simple y completa para gestionar incidentes del campus.</p>
             </div>
 
-            <div className="features__grid">
+            <div className="features__grid" ref={gridRef}>
                 {features.map((f, i) => (
-                    <div className="feature-card" key={i}>
+                    <div className="feature-card" key={i} style={{ '--feature-delay': `${i * 140}ms` }}>
                         <div className="feature-card__icon">{f.icon}</div>
                         <div>
                             <p className="feature-card__title">{f.title}</p>

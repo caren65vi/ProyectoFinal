@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   GithubAuthProvider,
+  OAuthProvider,
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
@@ -13,6 +14,7 @@ import { RegularUser } from "../Objects/regularUser";
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
+const microsoftProvider = new OAuthProvider("microsoft.com");
 
 // Trae datos del usuario desde Firestore
 const fetchUserData = async (uid) => {
@@ -44,6 +46,22 @@ export const signInGoogle = async () => {
 };
 
 // Login con GitHub — si es usuario nuevo lo registra en Firestore
+// Login con Microsoft - si es usuario nuevo lo registra en Firestore
+export const signInMicrosoft = async () => {
+  const res = await signInWithPopup(auth, microsoftProvider);
+  let userData = await fetchUserData(res.user.uid);
+  if (!userData) {
+    const nuevoUsuario = new RegularUser({
+      uid: res.user.uid,
+      email: res.user.email,
+      nombre: res.user.displayName || res.user.email,
+    });
+    await nuevoUsuario.guardar();
+    userData = nuevoUsuario.mostrar();
+  }
+  return { user: res.user, userData };
+};
+
 export const signInGithub = async () => {
   const res = await signInWithPopup(auth, githubProvider);
   let userData = await fetchUserData(res.user.uid);

@@ -1,12 +1,12 @@
 .navUser {
-  width: 240px;
-  min-width: 240px;
+  width: 220px;
+  min-width: 220px;
   height: 100vh;
   position: sticky;
   top: 0;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background: var(--navUserBg);
   border-right: 1px solid var(--border);
   overflow: hidden;
 }
@@ -261,25 +261,26 @@
     right: 0;
     height: 56px;
     padding: 0 16px;
-    background: var(--bg);
+    background: var(--navUserBg);
     border-bottom: 1px solid var(--border);
+    box-shadow: var(--cardShadow);
     z-index: 98;
   }
 
   .navUserMobileTitle {
     font-size: 16px;
     font-weight: 800;
-    color: var(--text);
-    letter-spacing: 0.01em;
+    color: var(--accent);
+    letter-spacing: 0.03em;
   }
 
   .navUserHamburger {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: none;
+    background: var(--accentSoft);
     border: none;
-    color: var(--textMuted);
+    color: var(--accent);
     cursor: pointer;
     padding: 8px;
     border-radius: 10px;
@@ -287,8 +288,8 @@
   }
 
   .navUserHamburger:hover {
-    background: var(--surfaceSoft);
-    color: var(--text);
+    background: var(--accentActive);
+    color: var(--accentLight);
   }
 
   /* Sidebar: oculto fuera de pantalla */

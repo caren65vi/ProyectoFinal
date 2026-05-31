@@ -5,7 +5,7 @@
 }
 
 /* ── Main container (mobile-first: column) ── */
-main {
+.homeMain {
   width: 100%;
   min-height: 80vh;
   display: flex;
@@ -13,7 +13,7 @@ main {
   gap: 0;
 }
 
-main hr {
+.homeMain hr {
   width: 85%;
   height: 2px;
   border: none;
@@ -148,7 +148,7 @@ main hr {
    DESKTOP (≥1025px)
 ══════════════════════════════════════ */
 @media (min-width: 1025px) {
-  main {
+  .homeMain {
     flex-direction: row;
     align-items: stretch;
   }
@@ -184,7 +184,7 @@ main hr {
     flex: 1;
   }
 
-  main hr {
+  .homeMain hr {
     display: none;
   }
 }

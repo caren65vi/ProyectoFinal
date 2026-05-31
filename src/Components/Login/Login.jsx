@@ -4,13 +4,14 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { SignInPage } from '@toolpad/core/SignInPage';
 import { createTheme } from '@mui/material/styles';
 import { CircularProgress, useMediaQuery } from '@mui/material';
-import { signIn as firebaseSignIn, signInGoogle,  onAuthChange, doSignOut } from '../../FireBase/auth';
+import { signIn as firebaseSignIn, signInGoogle, signInMicrosoft, onAuthChange, doSignOut } from '../../FireBase/auth';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../../FireBase/config';
 import './Login.css';
 
 const providers = [
   { id: 'google', name: 'Google' },
+  { id: 'microsoft-entra-id', name: 'Microsoft' },
   { id: 'credentials', name: 'Email and Password' },
 ];
 
@@ -46,7 +47,7 @@ const Login = () => {
     signInSubtitle: 'Accede con tu cuenta',
     signInRememberMe: 'Recordarme',
     providerSignInTitle: (provider) =>
-      provider.toLowerCase().includes('google')
+      /google|microsoft/i.test(provider)
         ? `Iniciar sesión con ${provider}`
         : 'Iniciar sesión',
     email: 'Correo electrónico',
@@ -85,6 +86,8 @@ const Login = () => {
         result = await firebaseSignIn(email, password);
       } else if (provider.id === 'google') {
         result = await signInGoogle();
+      } else if (provider.id === 'microsoft-entra-id' || provider.id === 'microsoft') {
+        result = await signInMicrosoft();
       } else {
         return { error: 'Proveedor no soportado.' };
       }

@@ -14,6 +14,8 @@
   --bg: #f8fafc;
   --surface: #ffffff;
   --surfaceSoft: #e2e8f0;
+  --navDashBg: #f1f5f9;
+  --navUserBg: #eef2f6;
   --border: #cbd5e1;
 
   --text: #0f172a;
@@ -76,6 +78,8 @@
     --bg: #0f172a;
     --surface: #111827;
     --surfaceSoft: #1e293b;
+    --navDashBg: #1c1f24;
+    --navUserBg: #171a20;
     --border: #334155;
 
     --text: #f8fafc;
