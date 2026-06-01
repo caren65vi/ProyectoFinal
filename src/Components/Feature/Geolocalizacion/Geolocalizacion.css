@@ -52,7 +52,7 @@
 /* Zona de estado */
 .geo-modal__status {
     width: 100%;
-    aspect-ratio: 16/9;
+    height: 260px; /* ← altura fija para el iframe */
     border: 2px dashed var(--border);
     border-radius: 12px;
     display: flex;
@@ -64,6 +64,7 @@
     font-size: 0.9rem;
     text-align: center;
     padding: 1rem;
+    overflow: hidden;
 }
 
 .geo-modal__coords {
