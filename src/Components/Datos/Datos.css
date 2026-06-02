@@ -1,9 +1,16 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .datosSummary {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 22px;
+  border-radius: 16px;
   margin-top: 24px;
   padding: 24px;
+  box-shadow: var(--cardShadow);
 }
 
 .datosSummaryHeader {
@@ -15,31 +22,32 @@
 
 .datosSummaryHeader span {
   color: var(--textMuted);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
 .datosSummaryHeader h2 {
   color: var(--text);
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   margin: 0;
 }
 
 .datosCards {
   display: grid;
   gap: 14px;
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
 }
 
 .datosCard {
   background: var(--surfaceSoft);
-  border-radius: 18px;
-  padding: 18px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  padding: 18px 16px;
 }
 
 .datosCard strong {
@@ -50,44 +58,44 @@
 
 .datosCard p {
   color: var(--textMuted);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   margin: 0;
 }
 
 .datosCard--primary {
-  border: 1px solid rgba(22, 149, 134, 0.2);
+  border-color: rgba(22, 149, 134, 0.3);
 }
 
-.datosCard--reportado {
-  border: 1px solid rgba(255, 165, 0, 0.25);
+.datosCard--abierto {
+  border-color: rgba(22, 149, 134, 0.25);
 }
 
-.datosCard--analisis {
-  border: 1px solid rgba(15, 118, 255, 0.25);
+.datosCard--proceso {
+  border-color: rgba(237, 176, 46, 0.35);
 }
 
-.datosCard--resuelto {
-  border: 1px solid rgba(11, 117, 14, 0.25);
+.datosCard--cerrado {
+  border-color: rgba(11, 117, 14, 0.25);
 }
 
 .datosError {
   background: var(--dangerSoft);
-  border: 1px solid var(--danger);
-  border-radius: 12px;
+  border: 1px solid var(--dangerBorder);
+  border-radius: 10px;
   color: var(--dangerHover);
+  font-size: 0.9rem;
   margin-bottom: 14px;
-  padding: 12px 14px;
-  font-size: 0.95rem;
+  padding: 10px 14px;
 }
 
 @media (max-width: 920px) {
   .datosCards {
-    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    grid-template-columns: repeat(2, minmax(130px, 1fr));
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 560px) {
   .datosCards {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }

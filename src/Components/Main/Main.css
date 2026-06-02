@@ -181,6 +181,16 @@
   color: var(--accent);
 }
 
+.latestIncidentState--en_proceso {
+  background: rgba(237, 176, 46, 0.15);
+  color: var(--warning);
+}
+
+.latestIncidentState--cerrado {
+  background: var(--surfaceSoft);
+  color: var(--textSubtle);
+}
+
 .latestIncidentContent p {
   color: var(--textMuted);
   display: -webkit-box;
@@ -261,6 +271,7 @@
 ══════════════════════════════════════ */
 @media (min-width: 1025px) {
   .homeMain {
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: stretch;
   }
@@ -289,6 +300,11 @@
     width: 50%;
     padding: 4rem 4rem 4rem 2rem;
     flex-direction: column;
+  }
+
+  .datosSummary {
+    width: 100%;
+    padding: 0 4rem 4rem 4rem;
   }
 
   .latestIncidentsList {

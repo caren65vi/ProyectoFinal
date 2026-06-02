@@ -3,57 +3,36 @@ import { collection, onSnapshot } from 'firebase/firestore'
 import { db } from '../../FireBase/config'
 import './Datos.css'
 
-const statusBuckets = {
-  reportado: ['reportado'],
-  analisis: ['analisis'],
-  resuelto: ['resuelto'],
-}
-
-const countState = (estado, bucket) => statusBuckets[bucket].includes(estado)
-
 const Datos = () => {
-  const [counts, setCounts] = useState({
-    total: 0,
-    reportado: 0,
-    analisis: 0,
-    resuelto: 0,
-  })
+  const [counts, setCounts] = useState({ total: 0, abierto: 0, en_proceso: 0, cerrado: 0 })
   const [error, setError] = useState('')
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, 'incidente'),
       (snapshot) => {
-        const totals = {
-          total: snapshot.size,
-          reportado: 0,
-          analisis: 0,
-          resuelto: 0,
-        }
-
-        snapshot.docs.forEach((document) => {
-          const estado = document.data().estado
-          if (countState(estado, 'reportado')) totals.reportado += 1
-          if (countState(estado, 'analisis')) totals.analisis += 1
-          if (countState(estado, 'resuelto')) totals.resuelto += 1
+        const totals = { total: snapshot.size, abierto: 0, en_proceso: 0, cerrado: 0 }
+        snapshot.docs.forEach((doc) => {
+          const estado = doc.data().estado
+          if (estado === 'abierto')    totals.abierto += 1
+          if (estado === 'en_proceso') totals.en_proceso += 1
+          if (estado === 'cerrado')    totals.cerrado += 1
         })
-
         setCounts(totals)
         setError('')
       },
-      (listenerError) => {
-        console.error('[Datos] Firestore listener error:', listenerError)
-        setError('No fue posible cargar los datos de incidentes.')
+      (err) => {
+        console.error('[Datos] Firestore error:', err)
+        setError('No fue posible cargar los datos.')
       },
     )
-
     return unsubscribe
   }, [])
 
   return (
-    <section className="datosSummary" aria-label="Resumen de datos de incidentes">
+    <section className="datosSummary" aria-label="Resumen de incidencias">
       <header className="datosSummaryHeader">
-        <span>Datos</span>
+        <span>Estadísticas</span>
         <h2>Resumen de incidencias</h2>
       </header>
 
@@ -62,22 +41,19 @@ const Datos = () => {
       <div className="datosCards">
         <article className="datosCard datosCard--primary">
           <strong>{counts.total}</strong>
-          <p>Total de incidentes</p>
+          <p>Total reportados</p>
         </article>
-
-        <article className="datosCard datosCard--reportado">
-          <strong>{counts.reportado}</strong>
-          <p>Reportado</p>
+        <article className="datosCard datosCard--abierto">
+          <strong>{counts.abierto}</strong>
+          <p>Abiertos</p>
         </article>
-
-        <article className="datosCard datosCard--analisis">
-          <strong>{counts.analisis}</strong>
-          <p>En análisis</p>
+        <article className="datosCard datosCard--proceso">
+          <strong>{counts.en_proceso}</strong>
+          <p>En proceso</p>
         </article>
-
-        <article className="datosCard datosCard--resuelto">
-          <strong>{counts.resuelto}</strong>
-          <p>Resuelto</p>
+        <article className="datosCard datosCard--cerrado">
+          <strong>{counts.cerrado}</strong>
+          <p>Resueltos</p>
         </article>
       </div>
     </section>
