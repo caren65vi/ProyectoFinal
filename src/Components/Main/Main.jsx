@@ -5,6 +5,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 import AddIcon from '@mui/icons-material/Add'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import LatestIncidents from './LatestIncidents'
+import Datos from '../Datos/Datos'
 
 const Main = () => {
     const navigate = useNavigate()
@@ -31,6 +32,7 @@ const Main = () => {
             </section>
             <hr />
             <LatestIncidents />
+            <Datos />
 
         </main>
     )

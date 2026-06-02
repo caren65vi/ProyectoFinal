@@ -36,7 +36,7 @@ export function comprimirImagen(file) {
 }
 
 export const allowedTypes = ['electrico', 'infraestructura', 'plomeria', 'seguridad', 'otro']
-export const allowedStates = ['abierto', 'en_proceso', 'cerrado']
+export const allowedStates = ['reportado', 'analisis', 'resuelto']
 
 export function validateIncidence(payload = {}) {
   const errors = []
@@ -65,7 +65,7 @@ export class Incidence {
     this.ubicacionTextual = data.ubicacionTextual || null
     this.latitud = data.latitud != null ? Number(data.latitud) : null
     this.longitud = data.longitud != null ? Number(data.longitud) : null
-    this.estado = data.estado || 'abierto'
+    this.estado = data.estado || 'reportado'
     this.idUsuario = data.idUsuario || null
     this.createdAt = data.createdAt || new Date().toISOString()
     this.updatedAt = data.updatedAt || null

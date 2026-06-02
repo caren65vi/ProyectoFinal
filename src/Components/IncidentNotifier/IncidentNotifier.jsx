@@ -19,9 +19,9 @@ function describeIncident(incident) {
 
 function getStateLabel(state) {
   const labels = {
-    abierto: 'Abierto',
-    en_proceso: 'En proceso',
-    cerrado: 'Cerrado',
+    reportado: 'Reportado',
+    analisis: 'En análisis',
+    resuelto: 'Resuelto',
   }
   return labels[state] || state || 'Sin estado'
 }

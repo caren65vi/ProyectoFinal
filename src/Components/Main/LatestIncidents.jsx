@@ -11,9 +11,10 @@ const typeLabels = {
 }
 
 const stateLabels = {
-  abierto: 'Abierto',
-  en_proceso: 'En proceso',
-  cerrado: 'Cerrado',
+  reportado: 'Reportado',
+  analisis: 'En análisis',
+  resuelto: 'Resuelto',
+  
 }
 
 const placeholders = Array.from({ length: 3 }, (_, index) => ({

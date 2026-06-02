@@ -1,0 +1,93 @@
+.datosSummary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  margin-top: 24px;
+  padding: 24px;
+}
+
+.datosSummaryHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.datosSummaryHeader span {
+  color: var(--textMuted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.datosSummaryHeader h2 {
+  color: var(--text);
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+.datosCards {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
+.datosCard {
+  background: var(--surfaceSoft);
+  border-radius: 18px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.datosCard strong {
+  color: var(--text);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.datosCard p {
+  color: var(--textMuted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.datosCard--primary {
+  border: 1px solid rgba(22, 149, 134, 0.2);
+}
+
+.datosCard--reportado {
+  border: 1px solid rgba(255, 165, 0, 0.25);
+}
+
+.datosCard--analisis {
+  border: 1px solid rgba(15, 118, 255, 0.25);
+}
+
+.datosCard--resuelto {
+  border: 1px solid rgba(11, 117, 14, 0.25);
+}
+
+.datosError {
+  background: var(--dangerSoft);
+  border: 1px solid var(--danger);
+  border-radius: 12px;
+  color: var(--dangerHover);
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 920px) {
+  .datosCards {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .datosCards {
+    grid-template-columns: 1fr;
+  }
+}
