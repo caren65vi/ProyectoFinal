@@ -5,7 +5,7 @@ import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined'
 import PhotoLibraryOutlinedIcon from '@mui/icons-material/PhotoLibraryOutlined'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import Button from '../../Components/Button/Button'
-import Dashboard from '../Dashboard/Dashboard'
+import Dashboard from '../../Components/Dashboard/Dashboard'
 import { auth } from '../../FireBase/config'
 import { createIncidence, comprimirImagen } from '../../Objects/incidence'
 import './Reportar.css'
@@ -22,6 +22,7 @@ const Reportar = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     tipo: 'electrico',
+    tipoPersonalizado: '',
     descripcion: '',
     ubicacionTextual: '',
   })
@@ -111,7 +112,11 @@ const Reportar = () => {
   const closeReport = () => navigate('/dashboard')
 
   const handleChange = ({ target: { name, value } }) => {
-    setFormData((current) => ({ ...current, [name]: value }))
+    setFormData((current) => {
+      const next = { ...current, [name]: value }
+      if (name === 'tipo' && value !== 'otro') next.tipoPersonalizado = ''
+      return next
+    })
   }
 
   const processPhoto = async (file, errorMessage) => {
@@ -254,6 +259,19 @@ const Reportar = () => {
               {incidentTypes.map(({ value, label }) => <option value={value} key={value}>{label}</option>)}
             </select>
           </label>
+
+          {formData.tipo === 'otro' && (
+            <label className="reportarField">
+              <span>¿Cuál otro tipo de incidente?</span>
+              <input
+                name="tipoPersonalizado"
+                value={formData.tipoPersonalizado}
+                onChange={handleChange}
+                placeholder="Describe brevemente el tipo de incidente"
+                required
+              />
+            </label>
+          )}
 
           <label className="reportarField">
             <span>Descripcion detallada</span>

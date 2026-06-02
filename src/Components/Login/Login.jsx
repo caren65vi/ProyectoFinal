@@ -77,9 +77,7 @@ const Login = () => {
           ? snap.data()
           : { rol: 'usuario', email: firebaseUser.email, nombre: firebaseUser.displayName };
         setSessionData({ user: firebaseUser, userData });
-        if (userData.rol !== 'admin') {
-          navigate('/dashboard');
-        }
+        navigate(userData.rol === 'admin' ? '/admin' : '/dashboard');
       } else {
         setSessionData(null);
       }

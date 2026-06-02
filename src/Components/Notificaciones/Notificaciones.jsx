@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import SyncAltIcon from '@mui/icons-material/SyncAlt'
-import NotifitorPlity from '../../Components/NotifitorPlity/NotifitorPlity'
+import NotifitorPlity from '../NotifitorPlity/NotifitorPlity'
 import {
   clearNotificationHistory,
   getNotificationHistory,
   notificationHistoryEvent,
-} from '../../Components/IncidentNotifier/notificationHistory'
+} from '../IncidentNotifier/notificationHistory'
 import './Notificaciones.css'
 
 const STATE_ALIAS = {

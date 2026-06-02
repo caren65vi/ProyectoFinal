@@ -8,13 +8,19 @@ import Pasos from './Components/Pasos/Pasos.jsx'
 import UserLayout from './PagesUsers/UserLayout/UserLayout'
 import Cta from './Components/Cta/Cta.jsx'
 import Footer from './Components/Footer/Footer.jsx'
-import Dashboard from './PagesUsers/Dashboard/Dashboard'
+import Dashboard from './Components/Dashboard/Dashboard'
 import Reportar from './PagesUsers/Reportar/Reportar'
 import NavIncidente from './PagesUsers/NavIncidente/NavIncidente'
-import Estadisticas from './PagesUsers/Estadisticas/Estadisticas'
-import Notificaciones from './PagesUsers/Notificaciones/Notificaciones'
+import DatosPersonales from './Components/DatosPersonales/DatosPersonales'
+import Notificaciones from './Components/Notificaciones/Notificaciones'
 import Register from './Components/Register/Register.jsx'
 import ReportarAnonimo from './PagesUsers/ReportarAnonimo/ReportarAnonimo.jsx'
+import AdminLayout from './PagesAdmin/AdminLayout/AdminLayout'
+import IncidentesAdmin from './PagesAdmin/Incidentes/IncidentesAdmin'
+import AgruparAdmin from './PagesAdmin/Agrupar/AgruparAdmin'
+import EstadisticasAdmin from './PagesAdmin/Estadisticas/EstadisticasAdmin'
+import ImprimirAdmin from './PagesAdmin/Imprimir/ImprimirAdmin'
+import UsuariosAdmin from './PagesAdmin/Usuarios/UsuariosAdmin'
 
 function App() {
   return (
@@ -28,8 +34,18 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="reportar" element={<Reportar />} />
           <Route path="mis-incidentes" element={<NavIncidente />} />
-          <Route path="estadisticas" element={<Estadisticas />} />
+          <Route path="datos-personales" element={<DatosPersonales />} />
           <Route path="notificaciones" element={<Notificaciones />} />
+        </Route>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard role="admin" />} />
+          <Route path="incidentes" element={<IncidentesAdmin />} />
+          <Route path="agrupar" element={<AgruparAdmin />} />
+          <Route path="estadisticas" element={<EstadisticasAdmin />} />
+          <Route path="imprimir" element={<ImprimirAdmin />} />
+          <Route path="usuarios" element={<UsuariosAdmin />} />
+          <Route path="notificaciones" element={<Notificaciones />} />
+          <Route path="datos-personales" element={<DatosPersonales />} />
         </Route>
       </Routes>
     </BrowserRouter>

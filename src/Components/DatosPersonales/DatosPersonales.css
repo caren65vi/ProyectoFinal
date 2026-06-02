@@ -1,0 +1,330 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── Contenedor principal ── */
+.datosPersonales {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 860px;
+  padding: 4px 0 40px;
+}
+
+/* ── Loading ── */
+.dpLoading {
+  padding: 48px;
+  text-align: center;
+  color: var(--textMuted);
+  font-size: 15px;
+}
+
+/* ── Header ── */
+.dpHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dpHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dpHeaderInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dpAvatarImg {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border);
+  flex-shrink: 0;
+}
+
+.dpAvatarFallback {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accentSoft);
+  border: 3px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.dpTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--textH);
+  line-height: 1.2;
+}
+
+.dpSubtitle {
+  font-size: 13px;
+  color: var(--textMuted);
+}
+
+/* Botón editar */
+.dpEditBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--btnRadius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.dpEditBtn:hover {
+  background: var(--accentSoft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Alerta flash ── */
+.dpAlert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.dpAlert--success {
+  background: rgba(11, 117, 14, 0.10);
+  color: var(--success);
+  border: 1px solid rgba(11, 117, 14, 0.28);
+}
+
+.dpAlert--error {
+  background: var(--dangerSoft);
+  color: var(--danger);
+  border: 1px solid var(--dangerBorder);
+}
+
+/* ── Tarjeta ── */
+.dpCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: var(--cardShadow);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dpCardTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--textH);
+  letter-spacing: 0.01em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Grid de campos ── */
+.dpGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 28px;
+}
+
+.dpField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dpFieldFull {
+  grid-column: 1 / -1;
+}
+
+.dpLabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--textSubtle);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dpValue {
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.dpValueMono {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13.5px;
+  word-break: break-all;
+}
+
+.dpValueId {
+  font-size: 11.5px;
+  color: var(--textMuted);
+}
+
+.dpHint {
+  font-size: 11px;
+  color: var(--textSubtle);
+  margin-top: -2px;
+}
+
+/* ── Inputs ── */
+.dpInput,
+.dpTextarea {
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14.5px;
+  font-family: inherit;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  outline: none;
+  resize: vertical;
+}
+
+.dpInput:focus,
+.dpTextarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accentSoft);
+}
+
+/* ── Rol badge ── */
+.dpRolBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.04em;
+  width: fit-content;
+}
+
+.dpRol--usuario {
+  background: var(--accentSoft);
+  color: var(--accent);
+  border: 1px solid rgba(22, 149, 134, 0.30);
+}
+
+.dpRol--admin {
+  background: rgba(11, 117, 14, 0.10);
+  color: var(--primary);
+  border: 1px solid rgba(11, 117, 14, 0.28);
+}
+
+/* ── Permisos ── */
+.dpPermisos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.dpPermiso {
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--surfaceSoft);
+  border: 1px solid var(--border);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--textMuted);
+  text-transform: capitalize;
+}
+
+/* ── Botones de acción ── */
+.dpActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+.dpBtnCancel,
+.dpBtnSave {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: var(--btnRadius);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.dpBtnCancel {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--textMuted);
+}
+
+.dpBtnCancel:hover:not(:disabled) {
+  background: var(--dangerSoft);
+  border-color: var(--dangerBorder);
+  color: var(--danger);
+}
+
+.dpBtnSave {
+  background: var(--primary);
+  border: 1.5px solid transparent;
+  color: var(--primaryContrast);
+  box-shadow: var(--btnShadow);
+}
+
+.dpBtnSave:hover:not(:disabled) {
+  background: var(--primaryHover);
+}
+
+.dpBtnSave:disabled,
+.dpBtnCancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .dpGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dpCard {
+    padding: 18px 16px;
+  }
+
+  .dpHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dpActions {
+    flex-direction: column;
+  }
+
+  .dpBtnCancel,
+  .dpBtnSave {
+    justify-content: center;
+  }
+}

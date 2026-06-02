@@ -1,14 +1,14 @@
 import { Outlet } from 'react-router-dom'
-import NavUser from '../Navuser/NavUser'
 import IncidentNotifier from '../../Components/IncidentNotifier/IncidentNotifier'
 import ModalSetPassword from '../../Components/ModalSetPassword/ModalSetPassword'
-import './UserLayout.css'
+import NavAdmin from '../NavAdmin/NavAdmin'
+import './AdminLayout.css'
 
-const UserLayout = () => {
+const AdminLayout = () => {
   return (
-    <div className="userLayout">
-      <NavUser />
-      <main className="userLayoutContent">
+    <div className="adminLayout">
+      <NavAdmin />
+      <main className="adminLayoutContent">
         <Outlet />
       </main>
       <IncidentNotifier />
@@ -17,4 +17,4 @@ const UserLayout = () => {
   )
 }
 
-export default UserLayout
+export default AdminLayout

@@ -21,7 +21,7 @@ const PRINCIPAL = [
 
 const misReportes = [
   { to: '/dashboard/mis-incidentes', label: 'Mis incidentes', icon: <FormatListBulletedIcon /> },
-  { to: '/dashboard/estadisticas',   label: 'Estadísticas',   icon: <BarChartIcon /> },
+  { to: '/dashboard/datos-personales', label: 'Datos Personales', icon: <BarChartIcon /> },
   { to: '/dashboard/notificaciones', label: 'Notificaciones', icon: <NotificationsNoneIcon /> },
 ]
 

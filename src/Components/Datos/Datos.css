@@ -7,7 +7,6 @@
 .datosSummary {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
   margin-top: 24px;
   padding: 24px;
   box-shadow: var(--cardShadow);

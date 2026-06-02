@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
-import { auth, db } from '../../FireBase/config'
-import { onAuthChange } from '../../FireBase/auth'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { db } from '../../FireBase/config'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined'
 import { useNavigate } from 'react-router-dom'
@@ -51,41 +50,27 @@ const MisIncidentes = () => {
   const [error, setError]         = useState('')
 
   useEffect(() => {
-    let unsubscribeIncidents = null
-    const unsubscribeAuth = onAuthChange((firebaseUser) => {
-      if (!firebaseUser) {
-        setIncidents([])
-        setError('')
+    const q = query(
+      collection(db, 'incidente'),
+      orderBy('createdAt', 'desc'),
+    )
+
+    const unsubscribeIncidents = onSnapshot(
+      q,
+      (snap) => {
+        setIncidents(snap.docs.map(d => ({ id: d.id, ...d.data() })))
         setLoading(false)
-        return
-      }
-
-      setLoading(true)
-      const q = query(
-        collection(db, 'incidente'),
-        where('idUsuario', '==', firebaseUser.uid),
-        orderBy('createdAt', 'desc'),
-      )
-
-      if (unsubscribeIncidents) unsubscribeIncidents()
-      unsubscribeIncidents = onSnapshot(
-        q,
-        (snap) => {
-          setIncidents(snap.docs.map(d => ({ id: d.id, ...d.data() })))
-          setLoading(false)
-          setError('')
-        },
-        (err) => {
-          console.error('[MisIncidentes]', err)
-          setError('No se pudieron cargar tus incidentes.')
-          setLoading(false)
-        },
-      )
-    })
+        setError('')
+      },
+      (err) => {
+        console.error('[MisIncidentes]', err)
+        setError('No se pudieron cargar los incidentes.')
+        setLoading(false)
+      },
+    )
 
     return () => {
       if (unsubscribeIncidents) unsubscribeIncidents()
-      if (typeof unsubscribeAuth === 'function') unsubscribeAuth()
     }
   }, [])
 
@@ -93,8 +78,8 @@ const MisIncidentes = () => {
     <div className="misIncidentes">
       <header className="misIncidentesHeader">
         <div>
-          <h1 className="misIncidentesTitle">Mis incidentes</h1>
-          <p className="misIncidentesSubtitle">Historial de reportes que has enviado</p>
+          <h1 className="misIncidentesTitle">Incidentes</h1>
+          <p className="misIncidentesSubtitle">Historial de reportes registrados</p>
         </div>
         <button className="misIncidentesBtn" onClick={() => navigate('/dashboard/reportar')}>
           <AddCircleOutlineIcon fontSize="small" />

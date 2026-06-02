@@ -7,7 +7,7 @@ import { onAuthChange } from '../../FireBase/auth'
 import { db } from '../../FireBase/config'
 import { doc, getDoc } from 'firebase/firestore'
 
-const NavDash = () => {
+const NavDash = ({ role = 'usuario' }) => {
   const navigate = useNavigate()
   const [nombreCliente, setNombreCliente] = useState('Usuario')
 
@@ -35,7 +35,7 @@ const NavDash = () => {
   return (
     <nav className="navDash">
       <div className="navDashLeft">
-        <span className="navDashEyebrow">Panel principal</span>
+        <span className="navDashEyebrow">{role === 'admin' ? 'Panel administrativo' : 'Panel principal'}</span>
         <div className="navDashMobileMeta">
           <p className="navDashBienvenido">Bienvenido, {nombreCliente}</p>
           <span className="navDashMobileFecha">{fechaFormateada}</span>
@@ -46,13 +46,15 @@ const NavDash = () => {
         <span className="navDashFechaTexto">{fechaFormateada}</span>
       </div>
 
-      <Button
-        className="navDashButton"
-        startIcon={<AddCircleOutlineIcon className="navDashBtnIcon" />}
-        onClick={() => navigate('/dashboard/reportar')}
-      >
-        <span className="navDashButtonText">Nuevo reporte</span>
-      </Button>
+      {role !== 'admin' && (
+        <Button
+          className="navDashButton"
+          startIcon={<AddCircleOutlineIcon className="navDashBtnIcon" />}
+          onClick={() => navigate('/dashboard/reportar')}
+        >
+          <span className="navDashButtonText">Nuevo reporte</span>
+        </Button>
+      )}
     </nav>
   )
 }

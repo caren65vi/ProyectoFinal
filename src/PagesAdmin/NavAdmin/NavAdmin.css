@@ -1,0 +1,228 @@
+.navAdmin {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex: 0 0 250px;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.navAdminBrand {
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 11px;
+  padding: 22px 20px;
+}
+
+.navAdminBrand div {
+  display: grid;
+  gap: 2px;
+}
+
+.navAdminBrand strong {
+  color: var(--text);
+}
+
+.navAdminBrand small,
+.navAdminFooter small {
+  color: var(--textMuted);
+}
+
+.navAdminLogo {
+  align-items: center;
+  background: var(--accent);
+  border-radius: 10px;
+  color: white;
+  display: inline-flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+.navAdminBody {
+  display: grid;
+  gap: 22px;
+  padding: 24px 10px;
+}
+
+.navAdminSection {
+  display: grid;
+  gap: 3px;
+}
+
+.navAdminSection > span {
+  color: var(--textMuted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0 10px 5px;
+}
+
+.navAdminLink {
+  align-items: center;
+  border-radius: 9px;
+  color: var(--text);
+  display: flex;
+  gap: 10px;
+  padding: 9px 10px;
+  text-decoration: none;
+}
+
+.navAdminLink svg {
+  height: 19px;
+  width: 19px;
+}
+
+.navAdminLink strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.navAdminLink:hover,
+.navAdminLinkActive {
+  background: var(--accentSoft);
+  color: var(--accent);
+}
+
+.navAdminFooter {
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding: 14px 16px;
+}
+
+/* ── Usuario en footer ── */
+.navAdminUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.navAdminAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+.navAdminAvatarIcon {
+  font-size: 36px !important;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.navAdminUserInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+}
+
+.navAdminUserName {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navAdminUserRole {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ── Botón cerrar sesión ── */
+.navAdminSignOut {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--textMuted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+
+.navAdminSignOut:hover {
+  background: var(--dangerSoft);
+  color: var(--danger);
+  border-color: var(--dangerBorder);
+}
+
+.navAdminSignOut svg {
+  height: 18px;
+  width: 18px;
+}
+
+.navAdminMobileBar,
+.navAdminClose {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .navAdminMobileBar {
+    align-items: center;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    height: 56px;
+    justify-content: space-between;
+    left: 0;
+    padding: 0 16px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 30;
+  }
+
+  .navAdminMobileBar button,
+  .navAdminClose {
+    background: transparent;
+    border: 0;
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex;
+  }
+
+  .navAdmin {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    width: 250px;
+    z-index: 40;
+  }
+
+  .navAdminOpen {
+    transform: translateX(0);
+  }
+
+  .navAdminClose {
+    margin-left: auto;
+  }
+
+  .navAdminOverlay {
+    background: rgba(0, 0, 0, 0.45);
+    inset: 0;
+    position: fixed;
+    z-index: 35;
+  }
+}

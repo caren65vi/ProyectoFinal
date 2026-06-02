@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { collection, limit, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { collection, onSnapshot } from 'firebase/firestore'
 import { db } from '../../FireBase/config'
 import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined'
 
@@ -33,6 +33,35 @@ const stateCls = {
 
 const placeholders = Array.from({ length: 3 }, (_, i) => ({ id: `ph-${i}`, placeholder: true }))
 
+const toTimestamp = (value) => {
+  if (!value) return 0
+  if (typeof value?.toMillis === 'function') return value.toMillis()
+  if (value instanceof Date) return value.getTime()
+
+  const parsed = new Date(value).getTime()
+  return Number.isNaN(parsed) ? 0 : parsed
+}
+
+const IncidentPhoto = ({ foto, tipo }) => {
+  const [failedPhoto, setFailedPhoto] = useState('')
+
+  if (!foto || failedPhoto === foto) {
+    return (
+      <div className="latestIncidentNoPhoto" aria-label="Incidente sin foto disponible">
+        <ImageNotSupportedOutlinedIcon />
+      </div>
+    )
+  }
+
+  return (
+    <img
+      src={foto}
+      alt={typeLabels[tipo] ?? tipo ?? 'Incidente'}
+      onError={() => setFailedPhoto(foto)}
+    />
+  )
+}
+
 const LatestIncidents = () => {
   const [incidents, setIncidents] = useState([])
   const [revision,  setRevision]  = useState(0)
@@ -44,7 +73,7 @@ const LatestIncidents = () => {
       (snapshot) => {
         const docs = snapshot.docs
           .map(d => ({ id: d.id, ...d.data() }))
-          .sort((a, b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''))
+          .sort((a, b) => toTimestamp(b.createdAt ?? b.fecha) - toTimestamp(a.createdAt ?? a.fecha))
           .slice(0, 3)
         setIncidents(docs)
         setRevision(r => r + 1)
@@ -80,20 +109,7 @@ const LatestIncidents = () => {
               key={`${incident.id}-${revision}`}
               style={{ '--incident-position': index }}
             >
-              {incident.foto
-                ? (
-                  <img
-                    src={incident.foto}
-                    alt={typeLabels[incident.tipo] ?? incident.tipo}
-                    onError={e => { e.currentTarget.style.display = 'none' }}
-                  />
-                )
-                : (
-                  <div className="latestIncidentNoPhoto">
-                    <ImageNotSupportedOutlinedIcon />
-                  </div>
-                )
-              }
+              <IncidentPhoto foto={incident.foto} tipo={incident.tipo} />
               <div className="latestIncidentContent">
                 <div className="latestIncidentMeta">
                   <strong>{typeLabels[incident.tipo] ?? incident.tipo ?? 'Sin tipo'}</strong>

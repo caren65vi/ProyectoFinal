@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { collection, onSnapshot, query, where } from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 import { auth, db } from '../../FireBase/config'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
-import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
 import BoltIcon from '@mui/icons-material/Bolt'
 import OpacityIcon from '@mui/icons-material/Opacity'
@@ -11,9 +10,8 @@ import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService'
 import SecurityIcon from '@mui/icons-material/Security'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
-import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined'
 import { useNavigate } from 'react-router-dom'
-import DetailsIncidents from './DetailsIncidents'
+import DetailsIncidents from '../../Components/DetailsIncidents/DetailsIncidents'
 import './NavIncidente.css'
 
 const TIPO_META = {
@@ -45,14 +43,6 @@ const FILTROS_ESTADO = [
   { key: 'resuelto',   label: 'Resuelto' },
 ]
 
-const TIMELINE_STEPS = [
-  { key: 'reportado',  label: 'Reportado' },
-  { key: 'analisis',   label: 'En análisis' },
-  { key: 'resuelto',   label: 'Resuelto' },
-]
-
-const ORDER_IDX = { reportado: 0, analisis: 1, resuelto: 2 }
-
 const fmt = (iso) => {
   if (!iso) return '—'
   try { return new Date(iso).toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' }) }
@@ -81,10 +71,7 @@ const NavIncidente = () => {
   const [selected, setSelected]   = useState(null)
 
   useEffect(() => {
-    const uid = auth.currentUser?.uid
-    if (!uid) return undefined
-
-    const q = query(collection(db, 'incidente'), where('idUsuario', '==', uid))
+    const q = query(collection(db, 'incidente'), orderBy('createdAt', 'desc'))
 
     const unsub = onSnapshot(q,
       (snap) => {
@@ -128,8 +115,8 @@ const NavIncidente = () => {
       {/* Header */}
       <header className="navIncHeader">
         <div>
-          <h1 className="navIncTitle">Mis incidentes</h1>
-          <p className="navIncSubtitle">Gestiona y revisa todos tus reportes</p>
+          <h1 className="navIncTitle">Incidentes</h1>
+          <p className="navIncSubtitle">Gestiona y revisa todos los reportes</p>
         </div>
         <button className="navIncBtn" onClick={() => navigate('/dashboard/reportar')}>
           <AddCircleOutlineIcon fontSize="small" /> Nuevo reporte
