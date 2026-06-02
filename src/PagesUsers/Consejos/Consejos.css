@@ -1,0 +1,54 @@
+.consejos {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.consejos__header {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.consejos__titulo {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.consejos__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.consejos__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.consejos__item:last-child {
+  border-bottom: none;
+}
+
+.consejos__icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+}
+
+.consejos__icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  color: var(--accent); /* ← ya estaba aquí la base, solo quita los overrides */
+}
+.consejos__text {
+  font-size: 13px;
+  color: var(--textMuted);
+  line-height: 1.55;
+  margin: 0;
+}

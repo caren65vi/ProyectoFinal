@@ -2,4 +2,42 @@
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+}
+
+/* ── Layout de dos columnas ── */
+.dashboard__body {
+  display: grid;
+  grid-template-columns: 4fr minmax(240px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.dashboard__main {
+  min-width: 0;
+}
+
+.dashboard__sidebar {
+  position: sticky;
+  top: 28px;
+  margin-top: 24px; /* solo el sidebar baja */
+}
+
+/* ── Móvil ── */
+@media (max-width: 1024px) {
+  .dashboard {
+    padding: 20px 16px;
+    gap: 20px;
+  }
+
+  .dashboard__body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .dashboard__sidebar {
+    position: static;
+  }
 }
