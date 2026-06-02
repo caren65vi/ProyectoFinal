@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Feature.css'
 import CameraAltIcon from '@mui/icons-material/CameraAlt'
 import LocationOnIcon from '@mui/icons-material/LocationOn'

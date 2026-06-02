@@ -5,7 +5,7 @@ function generateId() {
   try {
     if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID()
   } catch {
-
+    // Use the timestamp fallback when randomUUID is unavailable.
   }
   return `inc_${Date.now()}_${Math.floor(Math.random() * 10000)}`
 }
@@ -96,7 +96,7 @@ export class Incidence {
       try {
         this.foto = await comprimirImagen(photoFile)
       } catch (imgError) {
-        throw new Error('No se pudo procesar la imagen. Intenta con otra foto.')
+        throw new Error('No se pudo procesar la imagen. Intenta con otra foto.', { cause: imgError })
       }
     }
 
@@ -113,8 +113,10 @@ export class Incidence {
     } catch (firestoreError) {
       console.error('[Incidence] Error Firestore:', firestoreError)
       const code = firestoreError?.code ?? ''
-      if (code === 'permission-denied') throw new Error('Sin permiso para guardar. Revisa las reglas de Firestore.')
-      throw new Error(`Error al guardar (${code || firestoreError.message}).`)
+      if (code === 'permission-denied') {
+        throw new Error('Sin permiso para guardar. Revisa las reglas de Firestore.', { cause: firestoreError })
+      }
+      throw new Error(`Error al guardar (${code || firestoreError.message}).`, { cause: firestoreError })
     }
 
     return data

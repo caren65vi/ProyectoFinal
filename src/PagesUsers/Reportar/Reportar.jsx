@@ -69,12 +69,6 @@ const Reportar = () => {
     )
   }
 
-  const openMaps = () => {
-    if (coordinates.latitud == null || coordinates.longitud == null) return
-    const url = `https://www.google.com/maps?q=${coordinates.latitud},${coordinates.longitud}`
-    window.open(url, '_blank')
-  }
-
   useEffect(() => {
     return () => {
       if (redirectTimerRef.current) {
@@ -238,12 +232,6 @@ const Reportar = () => {
     await saveReport()
   }
 
-  useEffect(() => {
-    if (successMessage) {
-      setError('')
-    }
-  }, [successMessage])
-
   return (
     <div className="reportar">
       <div className="reportarDashboard" aria-hidden="true">
@@ -365,8 +353,8 @@ const Reportar = () => {
 
           <footer className="reportarActions">
             <Button className="btnOutline reportarCancel" type="button" onClick={closeReport}>Cancelar</Button>
-            <Button className="reportarSave" type="submit" disabled={isSaving}>
-              {isSaving ? 'Enviando...' : 'Guardar reporte'}
+            <Button className="reportarSave" type="submit" disabled={isSaving || isProcessingPhoto}>
+              {isProcessingPhoto ? 'Procesando foto...' : isSaving ? 'Enviando...' : 'Guardar reporte'}
             </Button>
           </footer>
         </form>

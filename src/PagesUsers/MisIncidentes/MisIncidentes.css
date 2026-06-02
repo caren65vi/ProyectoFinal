@@ -1,17 +1,224 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
 }
+
+.misIncidentes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.misIncidentesHeader {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+}
+
 .misIncidentesTitle {
-  font-size: 24px;
-  font-weight: 700;
   color: var(--text);
-  margin-bottom: 8px;
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .misIncidentesSubtitle {
-  font-size: 14px;
   color: var(--textMuted);
+  font-size: 14px;
+  margin-top: 3px;
+}
+
+.misIncidentesBtn {
+  align-items: center;
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  gap: 6px;
+  padding: 9px 16px;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.misIncidentesBtn:hover {
+  background: var(--primaryHover);
+  transform: translateY(-1px);
+}
+
+.misIncidentesError {
+  background: var(--dangerSoft);
+  border: 1px solid var(--dangerBorder);
+  border-radius: 10px;
+  color: var(--dangerHover);
+  font-size: 14px;
+  padding: 10px 14px;
+}
+
+.misIncidentesEmpty {
+  align-items: center;
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  color: var(--textMuted);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.misIncidentesEmpty p {
+  font-size: 15px;
+}
+
+.misIncidentesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+
+.misIncidenteCard {
+  align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--cardShadow);
+  display: flex;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.misIncidenteCard:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.misIncidenteCardSkeleton {
+  animation: misSkeletonPulse 1.4s ease-in-out infinite;
+  background: linear-gradient(90deg, var(--surfaceSoft) 25%, var(--surface) 50%, var(--surfaceSoft) 75%);
+  background-size: 200% 100%;
+  height: 110px;
+}
+
+@keyframes misSkeletonPulse {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.misIncidentePhoto {
+  background: var(--surfaceSoft);
+  flex: 0 0 120px;
+  overflow: hidden;
+  position: relative;
+}
+
+.misIncidentePhoto img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.misIncidenteNoPhoto {
+  color: var(--border) !important;
+  font-size: 32px !important;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.misIncidenteBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 14px 16px;
+}
+
+.misIncidenteTop {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.misIncidenteBadges {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.misIncidenteTipo {
+  background: var(--surfaceSoft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+}
+
+.misIncidenteEstado {
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  text-transform: uppercase;
+}
+
+.misIncidenteEstadoAbierto {
+  background: var(--accentSoft);
+  color: var(--accent);
+}
+
+.misIncidenteEstadoProceso {
+  background: rgba(237, 176, 46, 0.15);
+  color: var(--warning);
+}
+
+.misIncidenteEstadoCerrado {
+  background: var(--surfaceSoft);
+  color: var(--textSubtle);
+}
+
+.misIncidenteFecha {
+  color: var(--textSubtle);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.misIncidenteDesc {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--textMuted);
+  display: -webkit-box;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.misIncidenteUbicacion {
+  color: var(--textSubtle);
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .misIncidentePhoto {
+    flex: 0 0 90px;
+  }
+
+  .misIncidenteBody {
+    padding: 10px 12px;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import './FotoIncidente.css'
 import CameraAltIcon from '@mui/icons-material/CameraAlt'
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary'

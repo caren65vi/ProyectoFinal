@@ -1,0 +1,230 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Backdrop ── */
+.detBackdrop {
+  align-items: center;
+  animation: detFadeIn 0.2s ease;
+  background: var(--overlayBg);
+  backdrop-filter: blur(4px);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 20px;
+  position: fixed;
+  z-index: 200;
+}
+
+@keyframes detFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal ── */
+.detModal {
+  animation: detSlideUp 0.25s cubic-bezier(0.2, 0.9, 0.2, 1);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  max-height: 90dvh;
+  max-width: 760px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+@keyframes detSlideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ── Cabecera ── */
+.detHeader {
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 18px 22px;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 1;
+}
+
+.detHeaderLeft  { align-items: center; display: flex; gap: 12px; min-width: 0; }
+.detHeaderRight { align-items: center; display: flex; flex-shrink: 0; gap: 10px; }
+
+.detTitle { color: var(--text); font-size: 16px; font-weight: 700; line-height: 1.3; }
+.detId    { color: var(--textSubtle); font-size: 11px; }
+
+.detTipoIcon {
+  align-items: center;
+  border-radius: 12px;
+  display: flex;
+  flex-shrink: 0;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+.detTipoIcon .MuiSvgIcon-root { font-size: 20px !important; }
+
+.detTipoElectrico       { background: rgba(237,176,46,0.15); color: var(--warning); }
+.detTipoInfraestructura { background: var(--surfaceSoft); color: var(--textMuted); }
+.detTipoPlomeria        { background: var(--accentSoft); color: var(--accent); }
+.detTipoSeguridad       { background: var(--dangerSoft); color: var(--danger); }
+.detTipoOtro            { background: var(--surfaceSoft); color: var(--textSubtle); }
+
+.detEstadoBadge {
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  text-transform: uppercase;
+}
+.detEstadoAbierto { background: var(--accentSoft); color: var(--accent); }
+.detEstadoProceso { background: rgba(237,176,46,0.15); color: var(--warning); }
+.detEstadoCerrado { background: var(--surfaceSoft); color: var(--textSubtle); }
+
+.detCloseBtn {
+  align-items: center;
+  background: var(--surfaceSoft);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--textMuted);
+  cursor: pointer;
+  display: flex;
+  padding: 6px;
+  transition: all 0.15s;
+}
+.detCloseBtn:hover { background: var(--dangerSoft); border-color: var(--dangerBorder); color: var(--dangerHover); }
+
+/* ── Cuerpo ── */
+.detBody {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1.1fr 1fr;
+  padding: 22px;
+}
+
+/* ── Izquierda ── */
+.detLeft { display: flex; flex-direction: column; gap: 18px; }
+
+.detPhoto {
+  background: var(--surfaceSoft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  height: 200px;
+  overflow: hidden;
+}
+.detPhoto img { height: 100%; object-fit: cover; width: 100%; }
+
+.detNoPhoto {
+  align-items: center;
+  color: var(--textSubtle);
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  gap: 8px;
+  height: 100%;
+  justify-content: center;
+}
+.detNoPhoto .MuiSvgIcon-root { font-size: 36px !important; color: var(--border); }
+
+.detSection { display: flex; flex-direction: column; gap: 6px; }
+.detLabel   { color: var(--textSubtle); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.detDesc    { color: var(--text); font-size: 14px; line-height: 1.6; }
+
+.detInfoGrid { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+.detInfoItem { display: flex; flex-direction: column; gap: 4px; }
+.detInfoItem p { color: var(--text); font-size: 13px; }
+
+.detInfoRow { align-items: center; display: flex; gap: 4px; }
+.detInfoIcon { color: var(--accent); font-size: 14px !important; }
+
+/* ── Derecha — pasos ── */
+.detRight { display: flex; flex-direction: column; gap: 16px; }
+
+.detSteps { display: flex; flex-direction: column; gap: 0; list-style: none; }
+
+.detStep {
+  display: flex;
+  gap: 14px;
+}
+
+.detStepLeft {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.detStepNum {
+  align-items: center;
+  background: var(--surfaceSoft);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  color: var(--textMuted);
+  display: flex;
+  font-size: 13px;
+  font-weight: 700;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+  transition: all 0.2s;
+}
+
+.detStepDone .detStepNum {
+  background: var(--accentSoft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.detStepCurrent .detStepNum {
+  background: rgba(237,176,46,0.15);
+  border-color: var(--warning);
+  color: var(--warning);
+  box-shadow: 0 0 0 4px rgba(237,176,46,0.15);
+}
+
+.detStepLine {
+  background: var(--border);
+  flex: 1;
+  margin: 4px 0;
+  min-height: 28px;
+  width: 2px;
+}
+.detStepLineDone { background: var(--accent); }
+
+.detStepContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 20px;
+}
+
+.detStepHeader { align-items: center; display: flex; gap: 7px; }
+.detStepTitle  { color: var(--text); font-size: 14px; font-weight: 700; }
+.detStepDesc   { color: var(--textMuted); font-size: 12px; line-height: 1.5; padding-left: 26px; }
+.detStepDate   { color: var(--accent); font-size: 11px; font-weight: 600; padding-left: 26px; }
+
+.detStepIconDone    { color: var(--success) !important; font-size: 18px !important; }
+.detStepIconCurrent { color: var(--warning) !important; font-size: 18px !important; }
+.detStepIconPending { color: var(--border)  !important; font-size: 18px !important; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .detBackdrop { padding: 0; align-items: flex-end; }
+
+  .detModal {
+    border-radius: 20px 20px 0 0;
+    max-height: 92dvh;
+  }
+
+  .detBody {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+}

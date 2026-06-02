@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'

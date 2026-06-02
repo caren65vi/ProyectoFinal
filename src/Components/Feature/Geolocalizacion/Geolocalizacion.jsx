@@ -6,6 +6,8 @@ import MyLocationIcon from '@mui/icons-material/MyLocation'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 const Geolocalizacion = ({ onClose, onConfirm }) => {
+    void React
+    void onConfirm
     const [coords, setCoords] = useState(null)
     const [estado, setEstado] = useState('idle')
     const [mensaje, setMensaje] = useState('')

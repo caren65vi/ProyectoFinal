@@ -10,7 +10,7 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
 import { RegularUser } from "../objects/regularUser";
 
 const googleProvider = new GoogleAuthProvider();
@@ -23,9 +23,42 @@ const fetchUserData = async (uid) => {
   return snap.exists() ? snap.data() : null;
 };
 
+const normalizeEmail = (email = "") => email.trim().toLowerCase();
+
+const fetchUserDataByEmail = async (email) => {
+  const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail) return null;
+
+  const snap = await getDocs(
+    query(collection(db, "usuarios"), where("email", "==", normalizedEmail), limit(1)),
+  );
+  return snap.empty ? null : snap.docs[0].data();
+};
+
+const createSocialUserIfMissing = async (firebaseUser) => {
+  const userData = await fetchUserData(firebaseUser.uid);
+  if (userData) return userData;
+
+  const existingUser = await fetchUserDataByEmail(firebaseUser.email);
+  if (existingUser) {
+    await signOut(auth);
+    const error = new Error("Ya existe una cuenta con ese correo. Inicia sesion con el metodo usado al registrarte.");
+    error.code = "auth/email-already-in-use";
+    throw error;
+  }
+
+  const newUser = new RegularUser({
+    uid: firebaseUser.uid,
+    email: normalizeEmail(firebaseUser.email),
+    nombre: firebaseUser.displayName || firebaseUser.email,
+  });
+  await newUser.guardar();
+  return newUser.mostrar();
+};
+
 // Login con email y contraseña — trae datos de Firestore
 export const signIn = async (email, password) => {
-  const res = await signInWithEmailAndPassword(auth, email, password);
+  const res = await signInWithEmailAndPassword(auth, normalizeEmail(email), password);
   const userData = await fetchUserData(res.user.uid);
   return { user: res.user, userData };
 };
@@ -33,16 +66,7 @@ export const signIn = async (email, password) => {
 // Login con Google — si es usuario nuevo lo registra en Firestore
 export const signInGoogle = async () => {
   const res = await signInWithPopup(auth, googleProvider);
-  let userData = await fetchUserData(res.user.uid);
-  if (!userData) {
-    const nuevoUsuario = new RegularUser({
-      uid: res.user.uid,
-      email: res.user.email,
-      nombre: res.user.displayName || res.user.email,
-    });
-    await nuevoUsuario.guardar();
-    userData = nuevoUsuario.mostrar();
-  }
+  const userData = await createSocialUserIfMissing(res.user);
   return { user: res.user, userData };
 };
 
@@ -50,40 +74,30 @@ export const signInGoogle = async () => {
 // Login con Microsoft - si es usuario nuevo lo registra en Firestore
 export const signInMicrosoft = async () => {
   const res = await signInWithPopup(auth, microsoftProvider);
-  let userData = await fetchUserData(res.user.uid);
-  if (!userData) {
-    const nuevoUsuario = new RegularUser({
-      uid: res.user.uid,
-      email: res.user.email,
-      nombre: res.user.displayName || res.user.email,
-    });
-    await nuevoUsuario.guardar();
-    userData = nuevoUsuario.mostrar();
-  }
+  const userData = await createSocialUserIfMissing(res.user);
   return { user: res.user, userData };
 };
 
 export const signInGithub = async () => {
   const res = await signInWithPopup(auth, githubProvider);
-  let userData = await fetchUserData(res.user.uid);
-  if (!userData) {
-    const nuevoUsuario = new RegularUser({
-      uid: res.user.uid,
-      email: res.user.email,
-      nombre: res.user.displayName || res.user.email,
-    });
-    await nuevoUsuario.guardar();
-    userData = nuevoUsuario.mostrar();
-  }
+  const userData = await createSocialUserIfMissing(res.user);
   return { user: res.user, userData };
 };
 
 // Registro con email — crea en Auth y hace push a Firestore con RegularUser
 export const register = async (email, password, nombre) => {
-  const res = await createUserWithEmailAndPassword(auth, email, password);
-  const nuevoUsuario = new RegularUser({ uid: res.user.uid, email, nombre });
-  await nuevoUsuario.guardar();
-  return { user: res.user, userData: nuevoUsuario.mostrar() };
+  const normalizedEmail = normalizeEmail(email);
+  const existingUser = await fetchUserDataByEmail(normalizedEmail);
+  if (existingUser) {
+    const error = new Error("Ya existe una cuenta con ese correo.");
+    error.code = "auth/email-already-in-use";
+    throw error;
+  }
+
+  const res = await createUserWithEmailAndPassword(auth, normalizedEmail, password);
+  const newUser = new RegularUser({ uid: res.user.uid, email: normalizedEmail, nombre });
+  await newUser.guardar();
+  return { user: res.user, userData: newUser.mostrar() };
 };
 
 export const doSignOut = async () => {

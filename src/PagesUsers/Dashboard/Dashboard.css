@@ -13,18 +13,18 @@
   width: 100%;
 }
 
-.dashboard__body {
+.dashboardBody {
   align-items: start;
   display: grid;
   gap: 24px;
   grid-template-columns: 4fr minmax(240px, 1fr);
 }
 
-.dashboard__main {
+.dashboardMain {
   min-width: 0;
 }
 
-.dashboard__sidebar {
+.dashboardSidebar {
   margin-top: 24px;
   position: sticky;
   top: 28px;
@@ -36,12 +36,12 @@
     padding: 20px 16px;
   }
 
-  .dashboard__body {
+  .dashboardBody {
     gap: 20px;
     grid-template-columns: 1fr;
   }
 
-  .dashboard__sidebar {
+  .dashboardSidebar {
     position: static;
   }
 }

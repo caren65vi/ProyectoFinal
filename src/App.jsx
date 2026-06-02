@@ -10,7 +10,7 @@ import Cta from './Components/Cta/Cta.jsx'
 import Footer from './Components/Footer/Footer.jsx'
 import Dashboard from './PagesUsers/Dashboard/Dashboard'
 import Reportar from './PagesUsers/Reportar/Reportar'
-import MisIncidentes from './PagesUsers/MisIncidentes/MisIncidentes'
+import NavIncidente from './PagesUsers/NavIncidente/NavIncidente'
 import Estadisticas from './PagesUsers/Estadisticas/Estadisticas'
 import Notificaciones from './PagesUsers/Notificaciones/Notificaciones'
 import Register from './Components/Register/Register.jsx'
@@ -27,7 +27,7 @@ function App() {
         <Route path="/dashboard" element={<UserLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="reportar" element={<Reportar />} />
-          <Route path="mis-incidentes" element={<MisIncidentes />} />
+          <Route path="mis-incidentes" element={<NavIncidente />} />
           <Route path="estadisticas" element={<Estadisticas />} />
           <Route path="notificaciones" element={<Notificaciones />} />
         </Route>

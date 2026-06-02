@@ -81,10 +81,6 @@
     margin-top: 4px;
 }
 
-.paso:last-child .paso__linea {
-    display: none;
-}
-
 .paso__content {
     padding-top: 8px;
 }
@@ -149,10 +145,6 @@
         flex: 1;
         margin-top: 0;
         margin-left: 4px;
-    }
-
-    .paso:last-child .paso__linea {
-        display: none;
     }
 
     .paso__numero {

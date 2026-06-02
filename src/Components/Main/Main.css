@@ -176,19 +176,34 @@
   text-transform: uppercase;
 }
 
-.latestIncidentState--abierto {
+.latestIncidentStateAbierto {
   background: var(--accentSoft);
   color: var(--accent);
 }
 
-.latestIncidentState--en_proceso {
+.latestIncidentStateProceso {
   background: rgba(237, 176, 46, 0.15);
   color: var(--warning);
 }
 
-.latestIncidentState--cerrado {
+.latestIncidentStateCerrado {
   background: var(--surfaceSoft);
   color: var(--textSubtle);
+}
+
+.latestIncidentStateReportado {
+  background: var(--surfaceSoft);
+  color: var(--textMuted);
+}
+
+.latestIncidentNoPhoto {
+  align-items: center;
+  background: var(--surfaceSoft);
+  color: var(--border);
+  display: flex;
+  flex: 0 0 34%;
+  justify-content: center;
+  max-width: 150px;
 }
 
 .latestIncidentContent p {
