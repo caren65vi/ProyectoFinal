@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined'
+import PhotoLibraryOutlinedIcon from '@mui/icons-material/PhotoLibraryOutlined'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import Button from '../../Components/Button/Button'
 import Dashboard from '../Dashboard/Dashboard'
@@ -25,12 +26,18 @@ const Reportar = () => {
     ubicacionTextual: '',
   })
   const [photoFile, setPhotoFile] = useState(null)
+  const photoFileRef = useRef(null)
+  const [photoPreview, setPhotoPreview] = useState('')
   const [coordinates, setCoordinates] = useState({ latitud: null, longitud: null })
   const [locationStatus, setLocationStatus] = useState(
     navigator.geolocation ? 'Buscando ubicacion...' : 'Geolocalizacion no disponible',
   )
   const [photoName, setPhotoName] = useState('')
+  const [cameraOpen, setCameraOpen] = useState(false)
+  const [cameraError, setCameraError] = useState('')
   const [error, setError] = useState('')
+  const galleryInputRef = useRef(null)
+  const videoRef = useRef(null)
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
@@ -46,6 +53,37 @@ const Reportar = () => {
     )
   }, [])
 
+  useEffect(() => {
+    let currentStream = null
+    const openCameraDevice = async () => {
+      if (!cameraOpen) return
+      setCameraError('')
+
+      if (!navigator.mediaDevices?.getUserMedia) {
+        setCameraError('Este dispositivo no soporta acceso directo a la cámara.')
+        return
+      }
+
+      try {
+        currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        if (videoRef.current) {
+          videoRef.current.srcObject = currentStream
+        }
+      } catch (err) {
+        console.error('[Reportar] getUserMedia error', err)
+        setCameraError('No se pudo acceder a la cámara. Autoriza el permiso o usa galería.')
+      }
+    }
+
+    openCameraDevice()
+
+    return () => {
+      if (currentStream) {
+        currentStream.getTracks().forEach((track) => track.stop())
+      }
+    }
+  }, [cameraOpen])
+
   const closeReport = () => navigate('/dashboard')
 
   const handleChange = ({ target: { name, value } }) => {
@@ -56,9 +94,57 @@ const Reportar = () => {
     const file = files?.[0]
     if (!file) return
 
+    if (photoPreview) URL.revokeObjectURL(photoPreview)
+    const previewUrl = URL.createObjectURL(file)
+
+    photoFileRef.current = file
     setPhotoFile(file)
     setPhotoName(file.name)
+    setPhotoPreview(previewUrl)
     setError('')
+  }
+
+  const openCamera = () => setCameraOpen(true)
+  const openGallery = () => galleryInputRef.current?.click()
+
+  const closeCamera = () => {
+    setCameraOpen(false)
+    setCameraError('')
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject
+      if (stream.getTracks) {
+        stream.getTracks().forEach((track) => track.stop())
+      }
+      videoRef.current.srcObject = null
+    }
+  }
+
+  const captureFromCamera = () => {
+    const video = videoRef.current
+    if (!video) return
+
+    const canvas = document.createElement('canvas')
+    canvas.width = video.videoWidth
+    canvas.height = video.videoHeight
+    const context = canvas.getContext('2d')
+    context.drawImage(video, 0, 0, canvas.width, canvas.height)
+
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        setCameraError('No se pudo capturar la imagen. Intenta de nuevo.')
+        return
+      }
+      const file = new File([blob], `foto_${Date.now()}.jpg`, { type: 'image/jpeg' })
+      if (photoPreview) URL.revokeObjectURL(photoPreview)
+      const previewUrl = URL.createObjectURL(file)
+
+      photoFileRef.current = file
+      setPhotoFile(file)
+      setPhotoName(file.name)
+      setPhotoPreview(previewUrl)
+      setError('')
+      closeCamera()
+    }, 'image/jpeg', 0.85)
   }
 
   const saveReport = async () => {
@@ -70,14 +156,16 @@ const Reportar = () => {
       console.log('[Reportar] saveReport', { userId, formData, photoFile, coordinates })
 
       if (!userId) throw new Error('Debes iniciar sesion para enviar un reporte.')
-      if (!photoFile) throw new Error('La fotografia es obligatoria.')
+
+      const archivoFoto = photoFileRef.current || photoFile
+      if (!archivoFoto) throw new Error('La fotografia es obligatoria.')
 
       const incidence = createIncidence({
         ...formData,
         ...coordinates,
         idUsuario: userId,
       })
-      await incidence.guardar(photoFile)
+      await incidence.guardar(archivoFoto)
       navigate('/dashboard')
     } catch (submitError) {
       console.error('[Reportar] Error al guardar reporte:', submitError)
@@ -139,16 +227,45 @@ const Reportar = () => {
 
           <div className="reportarField">
             <span>Fotografia <b>*</b></span>
-            <label className={`reportarPhoto${photoName ? ' reportarPhotoSelected' : ''}`}>
-              <PhotoCameraOutlinedIcon />
-              <strong>{photoName || 'Tomar foto o seleccionar desde galeria'}</strong>
-              <input type="file" accept="image/*" capture="environment" onChange={handlePhoto} required />
-            </label>
+            <div className="reportarPhotoActions">
+              <button type="button" className="reportarPhotoButton" onClick={openCamera}>
+                <PhotoCameraOutlinedIcon />
+                <span>Camara</span>
+              </button>
+              <button type="button" className="reportarPhotoButton reportarPhotoButton--secondary" onClick={openGallery}>
+                <PhotoLibraryOutlinedIcon />
+                <span>Galeria</span>
+              </button>
+            </div>
+            <div className={`reportarPhoto${photoName ? ' reportarPhotoSelected' : ''}`}>
+              {photoPreview
+                ? <img src={photoPreview} alt="Foto seleccionada" />
+                : <strong>{photoName || 'Selecciona una imagen desde la camara o galeria'}</strong>
+              }
+            </div>
+            <input ref={galleryInputRef} type="file" accept="image/*" onChange={handlePhoto} hidden />
           </div>
+          {cameraOpen && (
+            <div className="cameraModalOverlay" onClick={closeCamera}>
+              <div className="cameraModal" onClick={(e) => e.stopPropagation()}>
+                <h2>Permitir acceso a la cámara</h2>
+                {cameraError && <p className="cameraError">{cameraError}</p>}
+                <video ref={videoRef} autoPlay muted playsInline className="cameraPreview" />
+                <div className="cameraActions">
+                  <button type="button" className="cameraCaptureButton" onClick={captureFromCamera}>
+                    Tomar foto
+                  </button>
+                  <button type="button" className="cameraCancelButton" onClick={closeCamera}>
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="reportarLocation">
             <LocationOnOutlinedIcon />
-            <span>Geolocalizacion automatica</span>
+            <span>Geolocalizacion (opcional)</span>
             <strong>{locationStatus}</strong>
           </div>
 

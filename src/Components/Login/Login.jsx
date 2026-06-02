@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { SignInPage } from '@toolpad/core/SignInPage';
 import { createTheme } from '@mui/material/styles';
-import { CircularProgress, useMediaQuery } from '@mui/material';
-import { signIn as firebaseSignIn, signInGoogle, signInMicrosoft, onAuthChange, doSignOut } from '../../FireBase/auth';
+import { Alert, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Link, TextField, useMediaQuery } from '@mui/material';
+import { signIn as firebaseSignIn, signInGoogle, signInMicrosoft, onAuthChange, doSignOut, resetPassword } from '../../FireBase/auth';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../../FireBase/config';
 import './Login.css';
@@ -28,9 +28,20 @@ const traducirError = (code) => {
   return errores[code] || 'Ocurrió un error. Intenta de nuevo.';
 };
 
+const ForgotPasswordLink = (props) => (
+  <Link component="button" type="button" underline="hover" {...props}>
+    Olvidaste tu contrasena?
+  </Link>
+);
+
 const Login = () => {
   const [sessionData, setSessionData] = React.useState(null);
   const [cargando, setCargando] = React.useState(true);
+  const [resetOpen, setResetOpen] = React.useState(false);
+  const [resetEmail, setResetEmail] = React.useState('');
+  const [resetMessage, setResetMessage] = React.useState('');
+  const [resetError, setResetError] = React.useState('');
+  const [resetSending, setResetSending] = React.useState(false);
   const navigate = useNavigate();
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const themeMode = prefersDarkMode ? 'dark' : 'light';
@@ -98,6 +109,38 @@ const Login = () => {
     }
   };
 
+  const openResetPassword = () => {
+    setResetMessage('');
+    setResetError('');
+    setResetOpen(true);
+  };
+
+  const closeResetPassword = () => {
+    if (!resetSending) setResetOpen(false);
+  };
+
+  const handleResetPassword = async (event) => {
+    event.preventDefault();
+    setResetMessage('');
+    setResetError('');
+
+    const email = resetEmail.trim();
+    if (!email) {
+      setResetError('Ingresa tu correo electronico.');
+      return;
+    }
+
+    setResetSending(true);
+    try {
+      await resetPassword(email);
+      setResetMessage('Si existe una cuenta con ese correo, recibiras un enlace para cambiar tu contrasena.');
+    } catch (err) {
+      setResetError(traducirError(err.code));
+    } finally {
+      setResetSending(false);
+    }
+  };
+
   if (cargando) {
     return (
       <div className="login-loading">
@@ -132,15 +175,48 @@ const Login = () => {
           <p>Plataforma de Reportes de Incidentes</p>
           <small>Universidad de la Amazonia</small>
         </div>
-        <SignInPage
-          signIn={signIn}
-          providers={providers}
-          localeText={localeText}
-          slotProps={{
-            form: { noValidate: true },
-            submitButton: { color: 'primary', variant: 'contained' },
-          }}
-        />
+        <div className="login-form-col">
+          <SignInPage
+            signIn={signIn}
+            providers={providers}
+            localeText={localeText}
+            slots={{ forgotPasswordLink: ForgotPasswordLink }}
+            slotProps={{
+              form: { noValidate: true },
+              forgotPasswordLink: { onClick: openResetPassword },
+              submitButton: { color: 'primary', variant: 'contained' },
+            }}
+          />
+          <p className="loginRegisterHint">
+            ¿No tienes cuenta?{' '}
+            <a href="/register">Regístrate aquí</a>
+          </p>
+          <Dialog open={resetOpen} onClose={closeResetPassword} fullWidth maxWidth="xs">
+            <form onSubmit={handleResetPassword}>
+              <DialogTitle>Recuperar contrasena</DialogTitle>
+              <DialogContent>
+                <p>Ingresa el correo de tu cuenta. Firebase enviara un enlace para crear una nueva contrasena.</p>
+                <TextField
+                  autoFocus
+                  fullWidth
+                  label="Correo electronico"
+                  margin="normal"
+                  onChange={(event) => setResetEmail(event.target.value)}
+                  type="email"
+                  value={resetEmail}
+                />
+                {resetMessage && <Alert severity="success">{resetMessage}</Alert>}
+                {resetError && <Alert severity="error">{resetError}</Alert>}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={closeResetPassword} disabled={resetSending}>Cancelar</Button>
+                <Button type="submit" variant="contained" disabled={resetSending}>
+                  {resetSending ? 'Enviando...' : 'Enviar enlace'}
+                </Button>
+              </DialogActions>
+            </form>
+          </Dialog>
+        </div>
       </div>
     </AppProvider>
   );

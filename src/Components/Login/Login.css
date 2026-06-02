@@ -84,9 +84,36 @@
   padding: 2rem;
 }
 
+.login-form-col {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Quitar el min-height 100dvh que pone MUI por defecto */
+.login-form-col .MuiBox-root,
 .login-wrapper > .MuiBox-root {
   min-height: auto !important;
   width: 100% !important;
+}
+
+.loginRegisterHint {
+  color: var(--textMuted);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.loginRegisterHint a {
+  color: var(--accent) !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+.loginRegisterHint a:hover {
+  color: var(--accentLight) !important;
+  text-decoration: underline !important;
 }
 
 .login-wrapper .MuiContainer-root {

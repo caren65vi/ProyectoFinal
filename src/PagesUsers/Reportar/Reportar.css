@@ -113,12 +113,41 @@
   outline: 2px solid var(--accentSoft);
 }
 
+.reportarPhotoActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.reportarPhotoButton {
+  align-items: center;
+  background: rgba(11, 117, 14, 0.12);
+  border: none;
+  border-radius: 999px;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  gap: 8px;
+  font-weight: 700;
+  justify-content: center;
+  padding: 10px 16px;
+  transition: transform 0.16s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.reportarPhotoButton:hover,
+.reportarPhotoButton:focus-visible {
+  background: rgba(11, 117, 14, 0.18);
+  transform: translateY(-1px);
+}
+
+.reportarPhotoButton--secondary {
+  background: rgba(22, 149, 134, 0.14);
+}
+
 .reportarPhoto {
   align-items: center;
-  border: 1px dashed var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   color: var(--textMuted);
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -126,13 +155,94 @@
   min-height: 96px;
   padding: 14px;
   text-align: center;
+  background: var(--surfaceSoft);
 }
 
-.reportarPhoto:hover,
+.reportarPhoto img {
+  max-width: 100%;
+  max-height: 180px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
 .reportarPhotoSelected {
-  background: var(--accentSoft);
-  border-color: var(--accent);
-  color: var(--accent);
+  background: rgba(22, 149, 134, 0.12);
+  color: var(--text);
+}
+
+.reportarPhoto strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cameraModalOverlay {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 20;
+}
+
+.cameraModal {
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  max-width: 420px;
+  padding: 20px;
+  width: min(100%, 420px);
+}
+
+.cameraModal h2 {
+  color: var(--text);
+  font-size: 1.15rem;
+  margin-bottom: 16px;
+}
+
+.cameraError {
+  color: var(--dangerHover);
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.cameraPreview {
+  border-radius: 14px;
+  height: 280px;
+  object-fit: cover;
+  width: 100%;
+  background: #000;
+}
+
+.cameraActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.cameraCaptureButton,
+.cameraCancelButton {
+  flex: 1 1 48%;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 12px 14px;
+}
+
+.cameraCaptureButton {
+  background: var(--primary);
+  color: #fff;
+}
+
+.cameraCancelButton {
+  background: var(--surfaceSoft);
+  color: var(--text);
 }
 
 .reportarPhoto strong {

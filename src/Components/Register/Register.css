@@ -1,34 +1,249 @@
 * {
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
+/* ════════════════════════════════════════
+   WRAPPER — dos columnas en desktop
+════════════════════════════════════════ */
 .registerWrapper {
-  min-height: 100vh;
-  width: 100vw;
-  background-color: #0d1117;
-  background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(29, 78, 216, 0.14) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(96, 165, 250, 0.09) 0%, transparent 50%);
-  display: flex;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) minmax(360px, 440px);
+  gap: clamp(3rem, 8vw, 9rem);
   align-items: center;
   justify-content: center;
-  padding: 2rem 1.5rem;
+  padding: 3rem;
+  overflow: hidden;
+  position: relative;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(11, 117, 14, 0.12), transparent 26rem),
+    radial-gradient(circle at 88% 86%, rgba(22, 149, 134, 0.12), transparent 24rem),
+    var(--bg);
 }
 
+/* Patrón de puntos */
+.registerWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.registerWrapper > * {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+/* ════════════════════════════════════════
+   COLUMNA IZQUIERDA — marca
+════════════════════════════════════════ */
+.registerBrand {
+  max-width: 360px;
+}
+
+.registerBrandBar {
+  width: 64px;
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  margin-bottom: 1.25rem;
+}
+
+.registerBrand h1 {
+  color: var(--text);
+  font-size: clamp(2.7rem, 4vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.registerBrand p {
+  color: var(--text);
+  font-size: 1.12rem;
+  line-height: 1.45;
+  margin-top: 1rem;
+  max-width: 290px;
+}
+
+.registerBrand small {
+  display: block;
+  color: var(--textMuted);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 0.55rem;
+}
+
+/* ════════════════════════════════════════
+   CARD — formulario
+════════════════════════════════════════ */
 .registerCard {
-  background-color: #1a2540 !important;
-  border: 1px solid #2d3f6e !important;
-  border-radius: 18px !important;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.55) !important;
-  width: min(480px, 100%);
-  padding: 2.5rem 2rem;
+  background: var(--loginCardBg);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 18px 55px rgba(34, 34, 34, 0.14);
+  padding: 2rem;
+  width: 100%;
+  max-width: 440px;
+}
+
+.registerTitle {
+  color: var(--text);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.registerSub {
+  color: var(--textMuted);
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ════════════════════════════════════════
+   FORM
+════════════════════════════════════════ */
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.registerField {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.registerField label {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.registerField input {
+  background: var(--loginFieldBg);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1rem;
+  min-height: 48px;
+  padding: 0 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  font-family: inherit;
+}
+
+.registerField input::placeholder {
+  color: var(--textSubtle);
+}
+
+.registerField input:hover {
+  border-color: var(--accent);
+}
+
+.registerField input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accentSoft);
+}
+
+/* ════════════════════════════════════════
+   ERROR
+════════════════════════════════════════ */
+.registerError {
+  background: var(--dangerSoft);
+  border: 1px solid var(--dangerBorder);
+  border-radius: 9px;
+  color: var(--dangerHover);
+  font-size: 0.9rem;
+  padding: 10px 14px;
+}
+
+/* ════════════════════════════════════════
+   BOTÓN
+════════════════════════════════════════ */
+.registerBtn {
+  background: var(--loginButtonBg);
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  min-height: 46px;
+  margin-top: 0.25rem;
+  transition: all 0.25s cubic-bezier(0.2, 0.9, 0.2, 1);
+  width: 100%;
+  box-shadow: 0 8px 22px rgba(11, 117, 14, 0.28);
+}
+
+.registerBtn:hover:not(:disabled) {
+  background: var(--loginButtonHoverBg);
+  box-shadow: 0 10px 26px rgba(11, 117, 14, 0.36);
+  transform: translateY(-2px);
+}
+
+.registerBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ════════════════════════════════════════
+   FOOTER LINK
+════════════════════════════════════════ */
+.registerFooter {
+  color: var(--textMuted);
+  font-size: 0.88rem;
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+.registerFooter a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.registerFooter a:hover {
+  color: var(--accentLight);
+  text-decoration: underline;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — tablet/teléfono ≤1024px
+════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .registerWrapper {
+    grid-template-columns: minmax(0, 440px);
+    gap: 1.5rem;
+    padding: 2rem 1.25rem;
+    align-content: center;
+  }
+
+  .registerBrand {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
   .registerCard {
-    padding: 2rem 1.25rem;
-    border-radius: 14px !important;
+    border-radius: 14px;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .registerTitle {
+    font-size: 1.6rem;
   }
 }

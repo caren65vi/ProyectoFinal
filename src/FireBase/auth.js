@@ -8,6 +8,7 @@ import {
   OAuthProvider,
   signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { RegularUser } from "../objects/regularUser";
@@ -87,6 +88,10 @@ export const register = async (email, password, nombre) => {
 
 export const doSignOut = async () => {
   await signOut(auth);
+};
+
+export const resetPassword = async (email) => {
+  await sendPasswordResetEmail(auth, email);
 };
 
 export const onAuthChange = (callback) => {
