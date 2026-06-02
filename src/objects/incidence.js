@@ -5,13 +5,13 @@ function generateId() {
   try {
     if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID()
   } catch {
-    // fallback timestamp
+
   }
   return `inc_${Date.now()}_${Math.floor(Math.random() * 10000)}`
 }
 
-// Comprime y convierte la imagen a Base64 (máx 800px, calidad 75%)
-function comprimirImagen(file) {
+
+export function comprimirImagen(file) {
   return new Promise((resolve, reject) => {
     const img = new Image()
     const url = URL.createObjectURL(file)

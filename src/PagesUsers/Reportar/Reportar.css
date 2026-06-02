@@ -254,26 +254,76 @@
   display: none;
 }
 
-.reportarLocation {
-  align-items: center;
-  color: var(--textMuted);
+.reportarLocationCard {
+  background: var(--surfaceSoft);
+  border: 1px solid var(--border);
+  border-radius: 18px;
   display: flex;
-  gap: 6px;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+}
+
+.reportarLocationInfo {
+  align-items: flex-start;
+  display: flex;
+  gap: 12px;
+}
+
+.reportarLocationInfo svg {
+  color: var(--success);
+  font-size: 24px;
+  margin-top: 2px;
+}
+
+.reportarLocationLabel {
+  color: var(--text);
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.reportarLocationCoords {
+  color: var(--textMuted);
   font-size: 13px;
+  margin-top: 8px;
 }
 
-.reportarLocation svg {
-  color: var(--success);
-  font-size: 19px;
+.reportarLocationActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.reportarLocation strong {
-  background: var(--accentSoft);
-  border-radius: 999px;
-  color: var(--success);
-  font-size: 12px;
-  margin-left: auto;
-  padding: 2px 9px;
+.reportarLocationBtn {
+  flex: 1 1 160px;
+  min-width: 140px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 12px 16px;
+  transition: transform 0.16s ease, background 0.2s ease;
+}
+
+.reportarLocationBtn:hover:not(:disabled),
+.reportarLocationBtn:focus-visible:not(:disabled) {
+  background: var(--primaryDark);
+  transform: translateY(-1px);
+}
+
+.reportarLocationBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reportarLocationBtn--secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
 }
 
 .reportarError {
@@ -282,6 +332,16 @@
   color: var(--dangerHover);
   font-size: 13px;
   padding: 8px 10px;
+}
+
+.reportarSuccess {
+  background: rgba(11, 117, 14, 0.12);
+  border: 1px solid rgba(11, 117, 14, 0.25);
+  border-radius: 10px;
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 12px;
 }
 
 .reportarActions {

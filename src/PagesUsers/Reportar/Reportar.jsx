@@ -7,7 +7,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import Button from '../../Components/Button/Button'
 import Dashboard from '../Dashboard/Dashboard'
 import { auth } from '../../FireBase/config'
-import { createIncidence } from '../../objects/incidence'
+import { createIncidence, comprimirImagen } from '../../Objects/incidence'
 import './Reportar.css'
 
 const incidentTypes = [
@@ -25,32 +25,62 @@ const Reportar = () => {
     descripcion: '',
     ubicacionTextual: '',
   })
-  const [photoFile, setPhotoFile] = useState(null)
-  const photoFileRef = useRef(null)
+  const [photoBase64, setPhotoBase64] = useState(null)
+  const photoBase64Ref = useRef(null)
+  const photoProcessingRef = useRef(null)
   const [photoPreview, setPhotoPreview] = useState('')
   const [coordinates, setCoordinates] = useState({ latitud: null, longitud: null })
   const [locationStatus, setLocationStatus] = useState(
-    navigator.geolocation ? 'Buscando ubicacion...' : 'Geolocalizacion no disponible',
+    'Presiona el botón para obtener tu ubicación',
   )
+  const [isGettingLocation, setIsGettingLocation] = useState(false)
   const [photoName, setPhotoName] = useState('')
   const [cameraOpen, setCameraOpen] = useState(false)
   const [cameraError, setCameraError] = useState('')
   const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const galleryInputRef = useRef(null)
   const videoRef = useRef(null)
+  const redirectTimerRef = useRef(null)
   const [isSaving, setIsSaving] = useState(false)
+  const [isProcessingPhoto, setIsProcessingPhoto] = useState(false)
 
-  useEffect(() => {
-    if (!navigator.geolocation) return
+  const requestLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationStatus('Geolocalización no disponible en este navegador.')
+      return
+    }
+
+    setIsGettingLocation(true)
+    setLocationStatus('Obteniendo ubicación...')
 
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        setCoordinates({ latitud: coords.latitude, longitud: coords.longitude })
-        setLocationStatus('GPS activo')
+        setCoordinates({ latitud: Number(coords.latitude), longitud: Number(coords.longitude) })
+        setLocationStatus('Ubicación guardada con éxito')
+        setIsGettingLocation(false)
       },
-      () => setLocationStatus('GPS no disponible'),
-      { enableHighAccuracy: true, timeout: 10000 },
+      (err) => {
+        console.error('[Reportar] geolocation error', err)
+        setLocationStatus('No se pudo obtener la ubicación. Revisa permisos GPS.')
+        setIsGettingLocation(false)
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     )
+  }
+
+  const openMaps = () => {
+    if (coordinates.latitud == null || coordinates.longitud == null) return
+    const url = `https://www.google.com/maps?q=${coordinates.latitud},${coordinates.longitud}`
+    window.open(url, '_blank')
+  }
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimerRef.current) {
+        clearTimeout(redirectTimerRef.current)
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -90,18 +120,40 @@ const Reportar = () => {
     setFormData((current) => ({ ...current, [name]: value }))
   }
 
-  const handlePhoto = ({ target: { files } }) => {
+  const processPhoto = async (file, errorMessage) => {
+    photoBase64Ref.current = null
+    setPhotoBase64(null)
+    setIsProcessingPhoto(true)
+    const processing = comprimirImagen(file)
+    photoProcessingRef.current = processing
+
+    try {
+      const base64 = await processing
+      if (photoProcessingRef.current === processing) {
+        photoBase64Ref.current = base64
+        setPhotoBase64(base64)
+      }
+    } catch {
+      if (photoProcessingRef.current === processing) setError(errorMessage)
+    } finally {
+      if (photoProcessingRef.current === processing) {
+        photoProcessingRef.current = null
+        setIsProcessingPhoto(false)
+      }
+    }
+  }
+
+  const handlePhoto = async ({ target: { files } }) => {
     const file = files?.[0]
     if (!file) return
 
     if (photoPreview) URL.revokeObjectURL(photoPreview)
     const previewUrl = URL.createObjectURL(file)
-
-    photoFileRef.current = file
-    setPhotoFile(file)
-    setPhotoName(file.name)
     setPhotoPreview(previewUrl)
+    setPhotoName(file.name)
     setError('')
+
+    await processPhoto(file, 'No se pudo procesar la imagen. Intenta con otra.')
   }
 
   const openCamera = () => setCameraOpen(true)
@@ -129,7 +181,7 @@ const Reportar = () => {
     const context = canvas.getContext('2d')
     context.drawImage(video, 0, 0, canvas.width, canvas.height)
 
-    canvas.toBlob((blob) => {
+    canvas.toBlob(async (blob) => {
       if (!blob) {
         setCameraError('No se pudo capturar la imagen. Intenta de nuevo.')
         return
@@ -138,12 +190,18 @@ const Reportar = () => {
       if (photoPreview) URL.revokeObjectURL(photoPreview)
       const previewUrl = URL.createObjectURL(file)
 
-      photoFileRef.current = file
-      setPhotoFile(file)
-      setPhotoName(file.name)
       setPhotoPreview(previewUrl)
+      setPhotoName(file.name)
       setError('')
       closeCamera()
+
+      try {
+        const base64 = await comprimirImagen(file)
+        photoBase64Ref.current = base64
+        setPhotoBase64(base64)
+      } catch {
+        setError('No se pudo procesar la imagen de la cámara.')
+      }
     }, 'image/jpeg', 0.85)
   }
 
@@ -153,20 +211,20 @@ const Reportar = () => {
 
     try {
       const userId = auth.currentUser?.uid
-      console.log('[Reportar] saveReport', { userId, formData, photoFile, coordinates })
-
       if (!userId) throw new Error('Debes iniciar sesion para enviar un reporte.')
 
-      const archivoFoto = photoFileRef.current || photoFile
-      if (!archivoFoto) throw new Error('La fotografia es obligatoria.')
+      const base64 = photoBase64Ref.current || photoBase64
+      if (!base64) throw new Error('La fotografia es obligatoria.')
 
       const incidence = createIncidence({
         ...formData,
         ...coordinates,
         idUsuario: userId,
+        foto: base64,
       })
-      await incidence.guardar(archivoFoto)
-      navigate('/dashboard')
+      await incidence.guardar(null)
+      setSuccessMessage('¡Guardado con éxito! Te redirigimos al dashboard...')
+      redirectTimerRef.current = window.setTimeout(() => navigate('/dashboard'), 3000)
     } catch (submitError) {
       console.error('[Reportar] Error al guardar reporte:', submitError)
       setError(submitError.message || 'No fue posible enviar el reporte.')
@@ -179,6 +237,12 @@ const Reportar = () => {
     event.preventDefault()
     await saveReport()
   }
+
+  useEffect(() => {
+    if (successMessage) {
+      setError('')
+    }
+  }, [successMessage])
 
   return (
     <div className="reportar">
@@ -263,12 +327,40 @@ const Reportar = () => {
             </div>
           )}
 
-          <div className="reportarLocation">
-            <LocationOnOutlinedIcon />
-            <span>Geolocalizacion (opcional)</span>
-            <strong>{locationStatus}</strong>
+          <div className="reportarLocationCard">
+            <div className="reportarLocationInfo">
+              <LocationOnOutlinedIcon />
+              <div>
+                <span className="reportarLocationLabel">Geolocalización (opcional)</span>
+                <strong>{locationStatus}</strong>
+                {coordinates.latitud != null && coordinates.longitud != null && (
+                  <p className="reportarLocationCoords">
+                    Lat: {coordinates.latitud.toFixed(6)} • Lon: {coordinates.longitud.toFixed(6)}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="reportarLocationActions">
+              <button
+                type="button"
+                className="reportarLocationBtn"
+                onClick={requestLocation}
+                disabled={isGettingLocation}
+              >
+                {isGettingLocation ? 'Obteniendo ubicación...' : 'Obtener ubicación'}
+              </button>
+              <button
+                type="button"
+                className="reportarLocationBtn reportarLocationBtn--secondary"
+                onClick={openMaps}
+                disabled={coordinates.latitud == null || coordinates.longitud == null}
+              >
+                Abrir en Maps
+              </button>
+            </div>
           </div>
 
+          {successMessage && <p className="reportarSuccess" role="status">{successMessage}</p>}
           {error && <p className="reportarError" role="alert">{error}</p>}
 
           <footer className="reportarActions">
