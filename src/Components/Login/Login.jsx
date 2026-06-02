@@ -4,9 +4,7 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { SignInPage } from '@toolpad/core/SignInPage';
 import { createTheme } from '@mui/material/styles';
 import { Alert, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Link, TextField, useMediaQuery } from '@mui/material';
-import { signIn as firebaseSignIn, signInGoogle, signInMicrosoft, onAuthChange, doSignOut, resetPassword } from '../../FireBase/auth';
-import { getDoc, doc } from 'firebase/firestore';
-import { db } from '../../FireBase/config';
+import { signIn as firebaseSignIn, signInGoogle, signInMicrosoft, onAuthChange, fetchUserDataForAuth, resetPassword } from '../../FireBase/auth';
 import './Login.css';
 
 const providers = [
@@ -72,19 +70,22 @@ const Login = () => {
   React.useEffect(() => {
     const unsubscribe = onAuthChange(async (firebaseUser) => {
       if (firebaseUser) {
-        const snap = await getDoc(doc(db, 'usuarios', firebaseUser.uid));
-        const userData = snap.exists()
-          ? snap.data()
-          : { rol: 'usuario', email: firebaseUser.email, nombre: firebaseUser.displayName };
+        const userData = await fetchUserDataForAuth(firebaseUser)
+          ?? { rol: 'usuario', email: firebaseUser.email, nombre: firebaseUser.displayName };
         setSessionData({ user: firebaseUser, userData });
-        navigate(userData.rol === 'admin' ? '/admin' : '/dashboard');
       } else {
         setSessionData(null);
       }
       setCargando(false);
     });
     return unsubscribe;
-  }, [navigate]);
+  }, []);
+
+  React.useEffect(() => {
+    if (!sessionData?.userData) return;
+    const destination = sessionData.userData.rol === 'admin' ? '/admin' : '/dashboard';
+    navigate(destination, { replace: true });
+  }, [sessionData, navigate]);
 
   const signIn = async (provider, formData) => {
     try {
@@ -148,16 +149,6 @@ const Login = () => {
   }
 
   if (sessionData) {
-    if (sessionData.userData?.rol === 'admin') {
-      return (
-        <div className="login-session">
-          <p>Bienvenido administrador: {sessionData.userData?.nombre || sessionData.userData?.email}</p>
-          <p>Este dashboard es solo para usuarios normales.</p>
-          <button onClick={doSignOut}>Cerrar sesión</button>
-        </div>
-      );
-    }
-
     return (
       <div className="login-loading">
         <p>Redirigiendo al dashboard...</p>

@@ -1,5 +1,5 @@
 import { doc, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
-import { db } from "../config";
+import { db } from "../FireBase/config";
 
 export class AdminUser {
   constructor({ uid, email, nombre, descripcion, permisos, creadoEn }) {

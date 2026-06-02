@@ -13,40 +13,61 @@ import {
 import { collection, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
 import { RegularUser } from "../objects/regularUser";
 
-const googleProvider = new GoogleAuthProvider();
-const githubProvider = new GithubAuthProvider();
+const googleProvider   = new GoogleAuthProvider();
+const githubProvider   = new GithubAuthProvider();
 const microsoftProvider = new OAuthProvider("microsoft.com");
 
-// Trae datos del usuario desde Firestore
+const normalizeEmail = (email = "") => email.trim().toLowerCase();
+
+// ── Busca usuario en Firestore por su UID (clave del documento) ──
 const fetchUserData = async (uid) => {
   const snap = await getDoc(doc(db, "usuarios", uid));
   return snap.exists() ? snap.data() : null;
 };
 
-const normalizeEmail = (email = "") => email.trim().toLowerCase();
-
+// ── Busca usuario por email o correo (para documentos creados manualmente) ──
 const fetchUserDataByEmail = async (email) => {
   const normalizedEmail = normalizeEmail(email);
   if (!normalizedEmail) return null;
 
-  const snap = await getDocs(
+  // Campo "email" — usuarios creados desde la app
+  const snap1 = await getDocs(
     query(collection(db, "usuarios"), where("email", "==", normalizedEmail), limit(1)),
   );
-  return snap.empty ? null : snap.docs[0].data();
+  if (!snap1.empty) return snap1.docs[0].data();
+
+  // Campo "correo" — documentos creados manualmente en Firestore
+  const snap2 = await getDocs(
+    query(collection(db, "usuarios"), where("correo", "==", normalizedEmail), limit(1)),
+  );
+  return snap2.empty ? null : snap2.docs[0].data();
 };
 
+export const fetchUserDataForAuth = async (firebaseUser) => {
+  if (!firebaseUser?.uid) return null;
+
+  const byUid = await fetchUserData(firebaseUser.uid);
+  if (byUid) return byUid;
+
+  return fetchUserDataByEmail(firebaseUser.email);
+};
+
+// ── Devuelve el rol del usuario (guardia de rutas) ──
+// Busca el documento del usuario con los datos de autenticación disponibles.
+export const fetchRolByUid = async (firebaseUser) => {
+  if (!firebaseUser?.uid) return null;
+  const userData = await fetchUserDataForAuth(firebaseUser);
+  return userData?.rol ?? null;
+};
+
+// ── Crea documento en Firestore si el usuario social no existe ──
 const createSocialUserIfMissing = async (firebaseUser) => {
-  const userData = await fetchUserData(firebaseUser.uid);
-  if (userData) return userData;
+  // 1. Busca por UID (caso normal)
+  const existingUser = await fetchUserDataForAuth(firebaseUser);
+  if (existingUser) return existingUser;
 
-  const existingUser = await fetchUserDataByEmail(firebaseUser.email);
-  if (existingUser) {
-    await signOut(auth);
-    const error = new Error("Ya existe una cuenta con ese correo. Inicia sesion con el metodo usado al registrarte.");
-    error.code = "auth/email-already-in-use";
-    throw error;
-  }
-
+  // 2. Busca por email/correo (documento creado manualmente con UID diferente)
+  // 3. Usuario completamente nuevo — lo registra como usuario regular
   const newUser = new RegularUser({
     uid: firebaseUser.uid,
     email: normalizeEmail(firebaseUser.email),
@@ -56,35 +77,37 @@ const createSocialUserIfMissing = async (firebaseUser) => {
   return newUser.mostrar();
 };
 
-// Login con email y contraseña — trae datos de Firestore
+// ── Login con email y contraseña ──
 export const signIn = async (email, password) => {
   const res = await signInWithEmailAndPassword(auth, normalizeEmail(email), password);
-  const userData = await fetchUserData(res.user.uid);
+
+  // Busca por UID primero; si el doc fue creado manualmente, busca por email
+  const userData = await fetchUserDataForAuth(res.user);
   return { user: res.user, userData };
 };
 
-// Login con Google — si es usuario nuevo lo registra en Firestore
+// ── Login con Google ──
 export const signInGoogle = async () => {
   const res = await signInWithPopup(auth, googleProvider);
   const userData = await createSocialUserIfMissing(res.user);
   return { user: res.user, userData };
 };
 
-// Login con GitHub — si es usuario nuevo lo registra en Firestore
-// Login con Microsoft - si es usuario nuevo lo registra en Firestore
+// ── Login con Microsoft ──
 export const signInMicrosoft = async () => {
   const res = await signInWithPopup(auth, microsoftProvider);
   const userData = await createSocialUserIfMissing(res.user);
   return { user: res.user, userData };
 };
 
+// ── Login con GitHub ──
 export const signInGithub = async () => {
   const res = await signInWithPopup(auth, githubProvider);
   const userData = await createSocialUserIfMissing(res.user);
   return { user: res.user, userData };
 };
 
-// Registro con email — crea en Auth y hace push a Firestore con RegularUser
+// ── Registro con email/contraseña ──
 export const register = async (email, password, nombre) => {
   const normalizedEmail = normalizeEmail(email);
   const existingUser = await fetchUserDataByEmail(normalizedEmail);
@@ -100,14 +123,6 @@ export const register = async (email, password, nombre) => {
   return { user: res.user, userData: newUser.mostrar() };
 };
 
-export const doSignOut = async () => {
-  await signOut(auth);
-};
-
-export const resetPassword = async (email) => {
-  await sendPasswordResetEmail(auth, email);
-};
-
-export const onAuthChange = (callback) => {
-  return onAuthStateChanged(auth, callback);
-};
+export const doSignOut  = async () => { await signOut(auth); };
+export const resetPassword = async (email) => { await sendPasswordResetEmail(auth, email); };
+export const onAuthChange  = (callback) => onAuthStateChanged(auth, callback);

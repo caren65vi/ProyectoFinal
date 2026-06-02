@@ -1,4 +1,5 @@
 import AdminPage from '../AdminPage/AdminPage'
+import './UsuariosAdmin.css'
 
 const UsuariosAdmin = () => (
   <AdminPage
