@@ -2,19 +2,11 @@ import './Dashboard.css'
 import NavDash from '../../PagesUsers/NavDash/NavDash'
 import QuickAction from '../../PagesUsers/QuickAction/QuickAction'
 import Consejos from '../../PagesUsers/Consejos/Consejos'
+import DashboardAdmin from '../../PagesAdmin/DashboardAdmin/DashboardAdmin'
 
 const Dashboard = ({ role = 'usuario' }) => {
   if (role === 'admin') {
-    return (
-      <div className="dashboard">
-        <NavDash role="admin" />
-        <section className="dashboardAdminIntro">
-          <span>Administracion del sistema</span>
-          <h1>Dashboard administrativo</h1>
-          <p>Usa el menu lateral para gestionar incidentes, reportes y usuarios.</p>
-        </section>
-      </div>
-    )
+    return <DashboardAdmin />
   }
 
   return (
