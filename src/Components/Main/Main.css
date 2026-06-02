@@ -21,7 +21,6 @@
   margin: 0 auto;
 }
 
-/* ── Badge ── */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -35,7 +34,6 @@
   color: var(--accent);
 }
 
-/* ── Information ── */
 .information {
   width: 100%;
   display: flex;
@@ -62,7 +60,6 @@
   line-height: 1.7;
 }
 
-/* Mobile: buttons stacked vertically, full width */
 .information .buttons {
   display: flex;
   flex-direction: column;
@@ -77,7 +74,6 @@
   justify-content: center;
 }
 
-/* ── Additional info ── */
 .additionalInfo {
   width: 100%;
   display: flex;
@@ -238,9 +234,6 @@
   }
 }
 
-/* ══════════════════════════════════════
-   TABLET (768px – 1024px)
-══════════════════════════════════════ */
 @media (min-width: 768px) and (max-width: 1024px) {
   .homeMain {
     min-height: auto;
@@ -260,7 +253,6 @@
     max-width: 600px;
   }
 
-  /* Tablet: buttons side by side */
   .information .buttons {
     flex-direction: row;
     width: auto;
@@ -271,7 +263,6 @@
     width: auto;
   }
 
-  /* Ocultar placeholders vacíos en tablet */
   .additionalInfo {
     padding: 0 3rem 3rem;
   }
@@ -281,9 +272,6 @@
   }
 }
 
-/* ══════════════════════════════════════
-   DESKTOP (≥1025px)
-══════════════════════════════════════ */
 @media (min-width: 1025px) {
   .homeMain {
     flex-wrap: wrap;

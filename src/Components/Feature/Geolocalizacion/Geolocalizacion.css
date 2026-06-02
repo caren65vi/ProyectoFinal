@@ -55,10 +55,9 @@
     background: var(--border);
 }
 
-/* Zona de estado */
 .geo-modal__status {
     width: 100%;
-    height: 260px; /* ← altura fija para el iframe */
+    height: 260px;
     border: 2px dashed var(--border);
     border-radius: 12px;
     display: flex;

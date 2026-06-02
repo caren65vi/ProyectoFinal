@@ -47,7 +47,6 @@ const Geolocalizacion = ({ onClose, onConfirm }) => {
                     </button>
                 </div>
 
-                {/* Mapa o estado */}
                 <div className="geo-modal__status">
                     {estado === 'idle' && (
                         <>

@@ -4,9 +4,6 @@
   box-sizing: border-box;
 }
 
-/* ════════════════════════════════════════
-   WRAPPER — dos columnas en desktop
-════════════════════════════════════════ */
 .registerWrapper {
   min-height: 100dvh;
   display: grid;
@@ -23,7 +20,6 @@
     var(--bg);
 }
 
-/* Patrón de puntos */
 .registerWrapper::before {
   content: '';
   position: absolute;
@@ -40,9 +36,6 @@
   min-width: 0;
 }
 
-/* ════════════════════════════════════════
-   COLUMNA IZQUIERDA — marca
-════════════════════════════════════════ */
 .registerBrand {
   max-width: 360px;
 }
@@ -80,9 +73,6 @@
   margin-top: 0.55rem;
 }
 
-/* ════════════════════════════════════════
-   CARD — formulario
-════════════════════════════════════════ */
 .registerCard {
   background: var(--loginCardBg);
   border: 1px solid var(--border);
@@ -108,9 +98,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* ════════════════════════════════════════
-   FORM
-════════════════════════════════════════ */
 .registerForm {
   display: flex;
   flex-direction: column;
@@ -156,9 +143,6 @@
   box-shadow: 0 0 0 3px var(--accentSoft);
 }
 
-/* ════════════════════════════════════════
-   ERROR
-════════════════════════════════════════ */
 .registerError {
   background: var(--dangerSoft);
   border: 1px solid var(--dangerBorder);
@@ -168,9 +152,6 @@
   padding: 10px 14px;
 }
 
-/* ════════════════════════════════════════
-   BOTÓN
-════════════════════════════════════════ */
 .registerBtn {
   background: var(--loginButtonBg);
   border: none;
@@ -200,9 +181,6 @@
   transform: none;
 }
 
-/* ════════════════════════════════════════
-   FOOTER LINK
-════════════════════════════════════════ */
 .registerFooter {
   color: var(--textMuted);
   font-size: 0.88rem;
@@ -221,9 +199,6 @@
   text-decoration: underline;
 }
 
-/* ════════════════════════════════════════
-   RESPONSIVE — tablet/teléfono ≤1024px
-════════════════════════════════════════ */
 @media (max-width: 1024px) {
   .registerWrapper {
     grid-template-columns: minmax(0, 440px);

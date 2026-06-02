@@ -52,11 +52,6 @@ const fmtFecha = (iso) => {
   catch { return iso }
 }
 
-const generateGrupoId = () => {
-  try { return crypto.randomUUID().slice(0, 8).toUpperCase() }
-  catch { return `G${Date.now().toString(36).toUpperCase()}` }
-}
-
 /* ── Modal de categoría — solo visualización ── */
 const CategoriaModal = ({ tipo, incidentes, onClose }) => {
   const meta = TIPO_META[tipo] ?? { label: tipo, icon: <HelpOutlineIcon />, cls: 'agradm__tipo--otro', color: '#8fa08e' }

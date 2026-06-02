@@ -37,7 +37,6 @@
     color: var(--text-muted);
 }
 
-/* ── Timeline ── */
 .pasos__timeline {
     display: flex;
     flex-direction: column;
@@ -110,7 +109,6 @@
     transform: translateX(-50%);
 }
 
-/* ── Desktop: horizontal ── */
 @media (min-width: 1025px) {
     .pasos {
         padding: 4rem 3rem;

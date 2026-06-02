@@ -70,7 +70,6 @@
   --loginButtonShadow: 0 6px 18px rgba(11, 117, 14, 0.28), 0 0 10px rgba(22, 149, 134, 0.10);
   --loginButtonHoverShadow: 0 10px 35px rgba(11, 117, 14, 0.36), 0 0 30px rgba(22, 149, 134, 0.18);
 
-  /* Variables de color institucional UDLA */
   --udla-verde: #0B750E;
   --udla-rojo: #E81312;
   --udla-negro: #222222;
@@ -86,7 +85,6 @@
   :root {
     color-scheme: dark;
 
-    /* Fondos neutros (slate/charcoal) — sin tinte verde */
     --bg: #0f1117;
     --surface: #161b27;
     --surfaceSoft: #1d2235;
@@ -94,13 +92,11 @@
     --navUserBg: #0d1220;
     --border: #252d40;
 
-    /* Texto neutro claro */
     --text: #dde3f0;
     --textMuted: #8892a8;
     --textSubtle: #4e5870;
     --textH: #dde3f0;
 
-    /* Acentos de marca — verde/teal institucional */
     --primary: #34AB1E;
     --primaryHover: #2d9219;
     --primaryContrast: #0f1117;
@@ -132,7 +128,6 @@
     --btnPulseStart: rgba(52, 171, 30, 0.35);
     --btnPulseEnd: rgba(52, 171, 30, 0);
 
-    /* Login dark — fondo neutro oscuro con glows de acento */
     --loginBg: linear-gradient(135deg, #080a10 0%, #0f1117 50%, #0b0e18 100%);
     --loginGlowLeft: radial-gradient(ellipse at 20% 50%, rgba(11, 117, 14, 0.14) 0%, transparent 60%);
     --loginGlowRight: radial-gradient(ellipse at 80% 20%, rgba(77, 191, 176, 0.10) 0%, transparent 50%);

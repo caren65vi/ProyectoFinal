@@ -92,7 +92,6 @@
   min-width: 0;
 }
 
-/* Quitar el min-height 100dvh que pone MUI por defecto */
 .login-form-col .MuiBox-root,
 .login-wrapper > .MuiBox-root {
   min-height: auto !important;

@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* ── Contenedor principal ── */
 .datosPersonales {
   display: flex;
   flex-direction: column;
@@ -13,7 +12,6 @@
   padding: 4px 0 40px;
 }
 
-/* ── Loading ── */
 .dpLoading {
   padding: 48px;
   text-align: center;
@@ -21,7 +19,6 @@
   font-size: 15px;
 }
 
-/* ── Header ── */
 .dpHeader {
   display: flex;
   align-items: center;
@@ -76,7 +73,6 @@
   color: var(--textMuted);
 }
 
-/* Botón editar */
 .dpEditBtn {
   display: flex;
   align-items: center;
@@ -98,7 +94,6 @@
   color: var(--accent);
 }
 
-/* ── Alerta flash ── */
 .dpAlert {
   padding: 12px 16px;
   border-radius: 8px;
@@ -118,7 +113,6 @@
   border: 1px solid var(--dangerBorder);
 }
 
-/* ── Tarjeta ── */
 .dpCard {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -139,7 +133,6 @@
   border-bottom: 1px solid var(--border);
 }
 
-/* ── Grid de campos ── */
 .dpGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -191,7 +184,6 @@
   margin-top: -2px;
 }
 
-/* ── Inputs ── */
 .dpInput,
 .dpTextarea {
   padding: 10px 14px;
@@ -212,7 +204,6 @@
   box-shadow: 0 0 0 3px var(--accentSoft);
 }
 
-/* ── Rol badge ── */
 .dpRolBadge {
   display: inline-block;
   padding: 4px 12px;
@@ -236,7 +227,6 @@
   border: 1px solid rgba(11, 117, 14, 0.28);
 }
 
-/* ── Permisos ── */
 .dpPermisos {
   display: flex;
   flex-wrap: wrap;
@@ -254,7 +244,6 @@
   text-transform: capitalize;
 }
 
-/* ── Botones de acción ── */
 .dpActions {
   display: flex;
   gap: 12px;
@@ -304,7 +293,6 @@
   cursor: not-allowed;
 }
 
-/* ── Responsive ── */
 @media (max-width: 680px) {
   .dpGrid {
     grid-template-columns: 1fr;

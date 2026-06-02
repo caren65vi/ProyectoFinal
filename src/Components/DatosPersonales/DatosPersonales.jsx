@@ -78,7 +78,6 @@ const DatosPersonales = () => {
 
   return (
     <div className="datosPersonales">
-      {/* Encabezado */}
       <div className="dpHeader">
         <div className="dpHeaderLeft">
           {user.photoURL
@@ -106,7 +105,6 @@ const DatosPersonales = () => {
         <div className={`dpAlert dpAlert--${saveMsg.type}`}>{saveMsg.text}</div>
       )}
 
-      {/* Sección editable */}
       <div className="dpCard">
         <h2 className="dpCardTitle">Información Personal</h2>
         <div className="dpGrid">
@@ -160,7 +158,6 @@ const DatosPersonales = () => {
         )}
       </div>
 
-      {/* Sección solo lectura */}
       <div className="dpCard">
         <h2 className="dpCardTitle">Información de Cuenta</h2>
         <div className="dpGrid">
@@ -210,7 +207,6 @@ const DatosPersonales = () => {
         </div>
       </div>
 
-      {/* Cambio de contraseña — siempre al final */}
       <ActPassword firebaseUser={user} />
     </div>
   )

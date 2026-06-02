@@ -33,7 +33,6 @@ const FotoIncidente = ({ onClose, onConfirm }) => {
                     </button>
                 </div>
 
-                {/* Zona de previsualización */}
                 <div className="modal__preview" onClick={() => galeriaRef.current.click()}>
                     {preview
                         ? <img src={preview} alt="Vista previa" />
@@ -44,7 +43,6 @@ const FotoIncidente = ({ onClose, onConfirm }) => {
                     }
                 </div>
 
-                {/* Inputs ocultos */}
                 <input
                     ref={galeriaRef}
                     type="file"
@@ -61,7 +59,6 @@ const FotoIncidente = ({ onClose, onConfirm }) => {
                     onChange={handleFile}
                 />
 
-                {/* Botones */}
                 <div className="modal__actions">
                     <button onClick={() => galeriaRef.current.click()}>
                         <PhotoLibraryIcon fontSize="small" />

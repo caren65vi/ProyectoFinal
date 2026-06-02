@@ -64,7 +64,6 @@
 	outline-offset: 4px;
 }
 
-/* Variante outline */
 .btnOutline {
 	background: transparent;
 	color: var(--accent);

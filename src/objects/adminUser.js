@@ -24,18 +24,15 @@ export class AdminUser {
     };
   }
 
-  // Push a Firestore con todos sus atributos
   async guardar() {
     await setDoc(doc(db, "usuarios", this.uid), this.mostrar());
   }
 
-  // Actualiza campos específicos en Firestore
   async actualizar(cambios) {
     await updateDoc(doc(db, "usuarios", this.uid), cambios);
     Object.assign(this, cambios);
   }
 
-  // Elimina el documento de Firestore
   async eliminar() {
     await deleteDoc(doc(db, "usuarios", this.uid));
   }
