@@ -4,7 +4,8 @@
   display: flex;
   flex: 0 0 250px;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .navAdminBrand {

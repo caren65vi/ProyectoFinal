@@ -1,0 +1,462 @@
+.impadm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1100px;
+}
+
+/* ── Encabezado ── */
+.impadm__header {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--cardShadow);
+  padding: 24px 28px;
+}
+
+.impadm__eyebrow {
+  color: var(--accent);
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+
+.impadm__title { color: var(--text); font-size: 22px; font-weight: 700; margin: 0 0 4px; }
+.impadm__subtitle { color: var(--textMuted); font-size: 14px; margin: 0; }
+
+/* ── Configuración ── */
+.impadm__config {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--cardShadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+
+.impadm__config-section {
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 24px;
+}
+
+.impadm__config-section:last-child {
+  border-bottom: none;
+}
+
+.impadm__config-label {
+  align-items: center;
+  color: var(--textMuted);
+  display: flex;
+  font-size: 12px;
+  font-weight: 800;
+  gap: 6px;
+  letter-spacing: 0.08em;
+}
+
+.impadm__entidad-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.impadm__entidad-btn {
+  align-items: center;
+  background: var(--surfaceSoft);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--textMuted);
+  cursor: pointer;
+  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+  gap: 8px;
+  padding: 12px 20px;
+  transition: all 0.15s;
+}
+
+.impadm__entidad-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.impadm__entidad-btn--active {
+  background: var(--accentSoft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.impadm__date-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.impadm__date-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.impadm__date-group span {
+  color: var(--textMuted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.impadm__date-input {
+  background: var(--surfaceSoft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  padding: 9px 13px;
+  transition: border-color 0.15s;
+}
+
+.impadm__date-input:focus { border-color: var(--accent); outline: none; }
+
+.impadm__extra-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.impadm__filter-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.impadm__filter-label span {
+  color: var(--textMuted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.impadm__select {
+  background: var(--surfaceSoft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 9px 13px;
+  transition: border-color 0.15s;
+  min-width: 180px;
+}
+.impadm__select:focus { border-color: var(--accent); outline: none; }
+
+.impadm__config-summary {
+  align-items: center;
+  background: var(--surfaceSoft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.impadm__config-summary span {
+  color: var(--textMuted);
+  font-size: 14px;
+}
+
+.impadm__config-summary strong {
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.impadm__print-btn {
+  align-items: center;
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  gap: 8px;
+  padding: 12px 22px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.impadm__print-btn:hover:not(:disabled) {
+  background: var(--primaryHover);
+}
+
+.impadm__print-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ── Vista previa (pantalla) ── */
+.impadm__preview {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--cardShadow);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+  padding: 20px 24px;
+}
+
+.impadm__preview-header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.impadm__preview-header strong {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.impadm__preview-header span {
+  color: var(--textMuted);
+  font-size: 13px;
+}
+
+.impadm__loading,
+.impadm__no-data {
+  color: var(--textMuted);
+  font-size: 14px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.impadm__table-wrap {
+  overflow-x: auto;
+}
+
+.impadm__table {
+  border-collapse: collapse;
+  font-size: 13.5px;
+  min-width: 600px;
+  width: 100%;
+}
+
+.impadm__table th {
+  background: var(--surfaceSoft);
+  border-bottom: 2px solid var(--border);
+  color: var(--textMuted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 10px 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.impadm__table td {
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  vertical-align: top;
+}
+
+.impadm__table tr:last-child td { border-bottom: none; }
+
+.impadm__td-num {
+  color: var(--textMuted) !important;
+  font-size: 12px !important;
+  text-align: right;
+  width: 32px;
+}
+
+.impadm__td-desc {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.impadm__td-fecha {
+  white-space: nowrap;
+  color: var(--textMuted) !important;
+  font-size: 12px !important;
+}
+
+.impadm__tipo-cell {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.impadm__estado-badge {
+  border: 1.5px solid;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.impadm__rol-badge {
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.impadm__rol-badge--admin { background: rgba(0,90,126,0.12); color: #005A7E; }
+.impadm__rol-badge--usuario { background: var(--accentSoft); color: var(--accent); }
+
+/* ── Cabecera/footer institucional (solo impresión) ── */
+.impadm__print-header,
+.impadm__print-footer { display: none; }
+
+/* ══ IMPRESIÓN ══ */
+@media print {
+  body * { visibility: hidden !important; }
+
+  .impadm__printable,
+  .impadm__printable * { visibility: visible !important; }
+
+  .impadm__printable {
+    position: fixed;
+    left: 0; top: 0;
+    width: 100%;
+    background: white;
+    padding: 0;
+  }
+
+  /* Cabecera verde institucional */
+  .impadm__print-header {
+    display: flex !important;
+    flex-direction: column;
+    background: #0B750E !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color: white !important;
+    padding: 16px 24px 12px;
+    margin-bottom: 0;
+  }
+
+  .impadm__print-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+
+  .impadm__print-logo-text {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+    border-right: 3px solid rgba(255,255,255,0.5);
+    padding-right: 16px;
+  }
+
+  .impadm__print-brand-info strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .impadm__print-brand-info span {
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  .impadm__print-stripe {
+    height: 4px;
+    background: #E81312 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 10px 0 8px;
+    border-radius: 2px;
+  }
+
+  .impadm__print-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .impadm__print-meta p {
+    margin: 0;
+    padding: 0 12px 0 0;
+    border-right: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .impadm__print-meta p:last-child { border-right: none; }
+
+  /* Ocultar controles */
+  .impadm__header,
+  .impadm__config { display: none !important; }
+
+  /* Vista previa */
+  .impadm__preview {
+    border: none;
+    box-shadow: none;
+    padding: 12px 24px;
+  }
+
+  .impadm__preview-header {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+
+  /* Tabla */
+  .impadm__table th {
+    background: #f5f5f5 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .impadm__estado-badge,
+  .impadm__rol-badge,
+  .impadm__tipo-cell {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Footer */
+  .impadm__print-footer {
+    display: flex !important;
+    justify-content: space-between;
+    border-top: 2px solid #0B750E;
+    color: #555;
+    font-size: 10px;
+    margin: 8px 24px 0;
+    padding-top: 8px;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .impadm__header { padding: 18px 20px; }
+  .impadm__config-section { padding: 14px 18px; }
+  .impadm__config-summary { padding: 14px 18px; }
+
+  .impadm__print-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .impadm__extra-filters {
+    flex-direction: column;
+  }
+
+  .impadm__select { min-width: 100%; }
+}
