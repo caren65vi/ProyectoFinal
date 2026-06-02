@@ -7,7 +7,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import Button from '../../Components/Button/Button'
 import Dashboard from '../../Components/Dashboard/Dashboard'
 import { auth } from '../../FireBase/config'
-import { createIncidence, comprimirImagen } from '../../Objects/incidence'
+import { createIncidence, comprimirImagen } from '../../objects/incidence'
 import './Reportar.css'
 
 const incidentTypes = [
